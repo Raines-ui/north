@@ -1,21 +1,41 @@
 <!--
  * @Author: wuxc 2445951561@qq.com
  * @Date: 2023-02-18 21:04:30
- * @LastEditors: wuxc 2445951561@qq.com
- * @LastEditTime: 2023-02-19 00:51:47
+ * @LastEditors: north 2445951561@qq.com
+ * @LastEditTime: 2023-03-25 18:02:36
  * @FilePath: \north-admin\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import './mock/index.ts'
-import { findAll } from './api/user/home'
+import { getMessageList } from './api/user/home'
 import { Airplane24Filled, AnimalRabbit24Regular } from '@vicons/fluent'
-function getList() {
-  findAll().then((res: any) => {
-    console.log('res', res)
+import { defineComponent, reactive, ref } from 'vue';
+export default defineComponent({
+setup() {
+  interface Message {
+    id: string
+    name: string
+    content: string
+    createTime: string
+}
+  let messageList = ref<any>([]);
+let total = 0;
+let listQuery = {
+  page:3,
+  size:10
+}
+function getList(){
+  getMessageList(listQuery).then((response: any) => {
+    messageList.value = response.data.result;
   })
 }
+return {
+  messageList
+}
+}
+
+})
 </script>
 
 <template>
@@ -43,12 +63,24 @@ function getList() {
         <AnimalRabbit24Regular />
       </n-icon>
     </n-space>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <n-table :bordered="false" :single-line="false">
+    <thead>
+      <tr>
+        <th>消息ID</th>
+        <th>发送人</th>
+        <th>内容</th>
+        <th>创建时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in messageList" :key="item.id">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.content}}</td>
+        <td>{{item.createTime}}</td>
+      </tr>
+    </tbody>
+  </n-table>
   </div>
   <HelloWorld msg="Vite + Vue" />
 </template>
