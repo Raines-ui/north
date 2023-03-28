@@ -37,10 +37,9 @@ export function getMessageList(options: any) {
   const lens = messageList.data.length
   return {
     code: 200,
-    total: lens,
     page: page,
     size: size,
-    pages: Math.ceil(lens / size),
+    total: Math.ceil(lens / size),
     result: creatPageData(messageList.data, page, size)
   }
 }

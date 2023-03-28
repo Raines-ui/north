@@ -40,6 +40,6 @@ export class MockDataModule {
 }
 
 export const creatPageData = (data: Array<any>, page: number, size: number) => {
-  console.log(data)
-  return data.splice((page - 1) * size, size * page)
+  console.log('MockData', data)
+  return data.slice((page - 1) * size, size * page)
 }
