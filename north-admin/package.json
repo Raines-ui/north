@@ -13,7 +13,9 @@
     "mockjs": "^1.1.0",
     "naive-ui": "^2.34.3",
     "pinia": "^2.0.30",
-    "vue": "^3.2.45"
+    "sass": "^1.60.0",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@types/mockjs": "^1.0.7",
