@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:31:01
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-28 17:43:08
+ * @LastEditTime: 2023-03-29 14:46:06
  * @FilePath: \north\north-admin\src\views\login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,14 +10,18 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { FormInst, useMessage, FormRules } from 'naive-ui'
+import { ILogin } from '@/interfaces/store/user'
+import useUserStore from '@/store/modules/user'
+import { useRouter } from 'vue-router'
 const message = useMessage()
+const router = useRouter()
 const formRef = ref<FormInst | null>(null)
-const formData = reactive({
-  account:'',
+const formData:ILogin = reactive({
+  username:'',
   password:'',
 })
 const rules:FormRules  = {
-  account: [
+  username: [
   {
     required:true,
     message:'请输入账号',
@@ -37,7 +41,17 @@ function handleLogin(e: MouseEvent){
   console.log(formRef.value)
   formRef.value?.validate((errors) => {
     if (!errors) {
-      message.success('验证成功')
+      console.log('formData', formData)
+      useUserStore().Login(formData).then((response :any) => {
+        console.log('response',response)
+        message.success(response.message)
+        console.log('token',useUserStore().token)
+        console.log('username',useUserStore().username)
+        console.log('uid',useUserStore().uid)
+        router.push('index')
+      }).catch((response) => {
+        message.error(response.message)
+      })
     } else {
       message.error('验证不通过')
     }
@@ -47,26 +61,25 @@ function handleLogin(e: MouseEvent){
 
 <template>
   <div class="w-full h-full bg-indigo-400 flex flex-col justify-center items-center">
-    <div class="w-1/2 h-3/5 bg-white rounded-xl shadow-xl p-6 flex flex-col justify-center items-center">
+    <div class="lg:w-1/2 lg:h-3/5 bg-white rounded-xl shadow-xl p-6 flex flex-col justify-center items-center w-5/6 h-1/2">
       <h1 class="w-full text-center text-2xl text-black tracking-widest	">登陆</h1>
       <n-form
-        class="my-6 w-1/2" 
+        class="my-6 lg:w-1/2 w-5/6" 
         ref="formRef"
-        :label-width="80"
         :model="formData"
         :rules="rules"
         size="large"
         label-placement="left"
         show-require-mark
         >
-        <n-form-item label="账号" path="account">
-          <n-input v-model:value="formData.account" placeholder="输入账号" />
+        <n-form-item label="账号" path="username" class="w-full">
+          <n-input v-model:value="formData.username" placeholder="输入账号" />
         </n-form-item>
-        <n-form-item label="密码" path="password">
+        <n-form-item label="密码" path="password" class="w-full">
           <n-input v-model:value="formData.password"  show-password-on="mousedown" type="password" placeholder="输入密码" />
         </n-form-item>
-        <n-form-item>
-            <n-button attr-type="button" @click="handleLogin" class="mx-auto">
+        <n-form-item class="w-full">
+            <n-button attr-type="button" @click="handleLogin" class="mx-auto w-full">
             登&nbsp;陆
             </n-button>
         </n-form-item>

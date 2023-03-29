@@ -1,8 +1,9 @@
 <script lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import { getMessageList } from './api/user/home'
+import { getMessageList } from '@/api/user/home'
 import { Airplane24Filled, AnimalRabbit24Regular } from '@vicons/fluent'
 import { defineComponent, reactive, ref, onMounted } from 'vue'
+import useUserStore from '@/store/modules/user'
 export default defineComponent({
   setup() {
     interface IMessage {
@@ -10,10 +11,6 @@ export default defineComponent({
       name?: string
       content?: string
       createTime?: string
-    }
-    interface IQuery{
-      page:number,
-      size:number
     }
     interface IQuery{
       page:number,
@@ -100,6 +97,9 @@ export default defineComponent({
       }
     }
     onMounted(()=>{
+      console.log('INDEX__token',useUserStore().token)
+      console.log('INDEX__username',useUserStore().username)
+      console.log('INDEX__uid',useUserStore().uid)
       Methods.getList()
     })
     return {
