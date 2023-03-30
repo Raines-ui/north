@@ -1,27 +1,57 @@
+<!--
+ * @Author: north 2445951561@qq.com
+ * @Date: 2023-03-28 14:04:44
+ * @LastEditors: north 2445951561@qq.com
+ * @LastEditTime: 2023-03-30 18:09:23
+ * @FilePath: \north\north-admin\src\views\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <script lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
 import { getMessageList } from '@/api/user/home'
-import { Airplane24Filled, AnimalRabbit24Regular } from '@vicons/fluent'
-import { defineComponent, reactive, ref, onMounted } from 'vue'
-import useUserStore from '@/store/modules/user'
+import { defineComponent, reactive, ref, onMounted, h } from 'vue'
+import type { Component } from 'vue'
+import { NIcon } from 'naive-ui'
+import {
+  Person12Regular as UserIcon,
+  BoxEdit24Filled as EditIcon,
+  SignOut24Regular as LogoutIcon,
+  CaretDownRight12Filled
+} from '@vicons/fluent'
+import { IRefData } from '@/interfaces/views/index'
+import logo from '@/assets/logo.png'
+import useStore from '@/store/index'
 export default defineComponent({
+  components: {
+    CaretDownRight12Filled
+  },
   setup() {
-    interface IMessage {
-      id?: string
-      name?: string
-      content?: string
-      createTime?: string
+    const { userStore } = useStore()
+    const renderIcon = (icon: Component) => {
+      return () => {
+        return h(NIcon, null, {
+          default: () => h(icon)
+        })
+      }
     }
-    interface IQuery{
-      page:number,
-      size:number
-    }
-    interface IRefData {
-      messageList:Array<IMessage>,
-      total:number,
-      listQuery:IQuery
-      loading:boolean
-    }
+    const options = [
+        {
+          label: '用户资料',
+          key: 'profile',
+          icon: renderIcon(UserIcon)
+        },
+        {
+          label: '编辑用户资料',
+          key: 'editProfile',
+          icon: renderIcon(EditIcon)
+        },
+        {
+          label: '退出登录',
+          key: 'logout',
+          icon: renderIcon(LogoutIcon)
+        }
+    ]
+
+    const userInfo = userStore()
     const refData: IRefData = reactive({
       messageList: reactive([]),
       total: ref(0),
@@ -72,7 +102,8 @@ export default defineComponent({
           label: '40/页',
           value: 40
         }
-      ]
+      ],
+      logo:logo
     }
     const Methods = {
       // 列表查询
@@ -97,22 +128,50 @@ export default defineComponent({
       }
     }
     onMounted(()=>{
-      console.log('INDEX__token',useUserStore().token)
-      console.log('INDEX__username',useUserStore().username)
-      console.log('INDEX__uid',useUserStore().uid)
+      console.log('INDEX__username',userStore().userName)
+      console.log('INDEX__uid',userStore().uid)
+      console.log('logo',unrefData.logo)
       Methods.getList()
     })
     return {
       refData,
       Methods,
-      unrefData
+      options,
+      userInfo,
+      unrefData,
+      CaretDownRight12Filled
     }
   }
 })
 </script>
 <template>
-  <div>
-    <div>
+  <div class="w-full h-full">
+    <header class="w-full bg-white h-20 p-2 shadow-xl">
+      <n-grid class="w-full h-full" item-responsive>
+        <n-grid-item span="12 400:6 600:6 800:6">
+          <n-space align="center" justify="center" class="h-full">
+           <n-image width="100" :src="unrefData.logo" preview-disabled/>
+           <span class="text-gray-600 font-bold italic text-xl font-mono">North-Admin</span>  
+          </n-space>
+        </n-grid-item>
+        <n-grid-item span="0 400:12 600:12 800:12"></n-grid-item>
+        <n-grid-item span="12 400:6 600:6 800:6">
+          <n-space justify="end" align="center" class="h-full">
+            <n-dropdown :options="options">
+              <n-space justify="center" align="end" class="cursor-pointer">
+                <span class="text-gray-600 text-lg font-mono">{{ userInfo.nickName }}</span>
+                <n-icon size="14">
+                  <svg-icon :icon="userInfo.gender === 1 ? 'pied-piper-hat' : 'ggshoes'" :style="{color:(userInfo.gender === 1 ? '#7a6c56' : '#f45097')}"></svg-icon>
+                </n-icon>
+                <n-icon size="12"><CaretDownRight12Filled /></n-icon>
+              </n-space>
+            </n-dropdown>
+            <n-avatar round :size="48" :src="userInfo.avatar" />
+          </n-space>
+        </n-grid-item>
+      </n-grid>
+    </header>
+    <div class="p-6">
     <div class="truncate w-60 h-20">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
       repellendus odit pariatur dolorum molestias possimus. Quam excepturi, quo
@@ -121,14 +180,6 @@ export default defineComponent({
     </div>
     <n-space>
       <n-button @click="Methods.getList">获取mock数据</n-button>
-    </n-space>
-    <n-space>
-      <n-icon size="40" color="#0e7a0d">
-        <Airplane24Filled />
-      </n-icon>
-      <n-icon size="30" color="red">
-        <AnimalRabbit24Regular />
-      </n-icon>
     </n-space>
     <n-spin :show="refData.loading">
       <n-data-table :columns="unrefData.tableColumns" :data="refData.messageList" style="height: 300px;" flex-height />
@@ -142,8 +193,6 @@ export default defineComponent({
         @update:page="Methods.onPageChange"
         @update:pageSize="Methods.onPageSizeChange"/>
     </n-spin>
-    
   </div>
-  <HelloWorld msg="Vite + Vue" />
   </div>
 </template>

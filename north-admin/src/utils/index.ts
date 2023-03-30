@@ -1,57 +1,16 @@
 /*
  * @Author: north 2445951561@qq.com
- * @Date: 2023-03-25 13:47:25
+ * @Date: 2023-03-30 14:16:03
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-30 14:12:49
- * @FilePath: \north\north-admin\src\mock\utils\index.ts
+ * @LastEditTime: 2023-03-30 16:38:50
+ * @FilePath: \north\north-admin\src\utils\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import Mock from 'mockjs'
-export class MockDataModule {
-  list: Array<any>
-  constructor() {
-    this.list = []
-  }
-  /**
-   * 
-   * @param {数据} data 
-   * @param {数量} total 
-   * @returns 
-   */
-  mockData(data: any, total: number) {
-    this.list = []
-    for (let i = 0; i < total; i++) {
-      let item: any = {};
-      for (const key in data) {
-        item[key] = this.creatData(data[key].split('|'))
-      }
-      this.list.push(item)
-    }
-    return this.list
-  }
-  creatData(option: [string, number, number]) {
-    // 生成随机数据
-    const Random = Mock.Random
-    const name: string = option[0]
-    const min: number = option[1]
-    const max: number = option[2]
-    switch (name) {
-      case 'id':
-        return Random.id()
-      case 'csentence':
-        return Random.csentence(min, max)
-      case 'datetime':
-        return Random.datetime()
-    }
-
-  }
-}
-
-export const creatPageData = (data: Array<any>, page: number, size: number) => {
-  console.log('MockData', data)
-  return data.slice((page - 1) * size, size * page)
-}
-
+/**
+ * 
+ * @param url url地址
+ * @returns url地址中的所有参数
+ */
 export const getParams = (url: string) => {
   // 获取首个?位置
   const index = url.indexOf('?')
@@ -77,7 +36,12 @@ export const getParams = (url: string) => {
   return null
 }
 
-// 根据url获取query参数
+/**
+ * @param url url地址
+ * @param name 指定参数名
+ * @returns 指定参数值
+ */
+
 export const getQuery = (url: string, name: string) => {
   // 获取首个?位置
   const index = url.indexOf('?')

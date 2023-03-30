@@ -2,6 +2,14 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:31:01
  * @LastEditors: north 2445951561@qq.com
+ * @LastEditTime: 2023-03-30 10:22:58
+ * @FilePath: \north\north-admin\src\views\login.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
+ * @Author: north 2445951561@qq.com
+ * @Date: 2023-03-28 14:31:01
+ * @LastEditors: north 2445951561@qq.com
  * @LastEditTime: 2023-03-29 14:46:06
  * @FilePath: \north\north-admin\src\views\login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
@@ -11,10 +19,11 @@
 import { reactive, ref } from 'vue'
 import { FormInst, useMessage, FormRules } from 'naive-ui'
 import { ILogin } from '@/interfaces/store/user'
-import useUserStore from '@/store/modules/user'
+import useStore from '@/store/index'
 import { useRouter } from 'vue-router'
 const message = useMessage()
 const router = useRouter()
+const { userStore } = useStore()
 const formRef = ref<FormInst | null>(null)
 const formData:ILogin = reactive({
   username:'',
@@ -42,12 +51,12 @@ function handleLogin(e: MouseEvent){
   formRef.value?.validate((errors) => {
     if (!errors) {
       console.log('formData', formData)
-      useUserStore().Login(formData).then((response :any) => {
+      userStore().Login(formData).then((response :any) => {
         console.log('response',response)
         message.success(response.message)
-        console.log('token',useUserStore().token)
-        console.log('username',useUserStore().username)
-        console.log('uid',useUserStore().uid)
+        console.log('token',userStore().token)
+        console.log('username',userStore().username)
+        console.log('uid',userStore().uid)
         router.push('index')
       }).catch((response) => {
         message.error(response.message)
