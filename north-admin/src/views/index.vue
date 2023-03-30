@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:04:44
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-30 18:09:23
+ * @LastEditTime: 2023-03-30 18:24:55
  * @FilePath: \north\north-admin\src\views\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -160,8 +160,8 @@ export default defineComponent({
             <n-dropdown :options="options">
               <n-space justify="center" align="end" class="cursor-pointer">
                 <span class="text-gray-600 text-lg font-mono">{{ userInfo.nickName }}</span>
-                <n-icon size="14">
-                  <svg-icon :icon="userInfo.gender === 1 ? 'pied-piper-hat' : 'ggshoes'" :style="{color:(userInfo.gender === 1 ? '#7a6c56' : '#f45097')}"></svg-icon>
+                <n-icon size="14" :color="userInfo.gender === 1 ? '#7f6742' : '#f45097'">
+                  <svg-icon :icon="userInfo.gender === 1 ? 'pied-piper-hat' : 'ggshoes'"></svg-icon>
                 </n-icon>
                 <n-icon size="12"><CaretDownRight12Filled /></n-icon>
               </n-space>

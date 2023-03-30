@@ -48,7 +48,7 @@ export function getUserInfo(options: any) {
     result: {
       uid: '13587',
       userName: 'admin',
-      gender: 0, // 0 女 1 男
+      gender: 1, // 0 女 1 男
       nickName: 'L.L.',
       avatar: avatar
     },
