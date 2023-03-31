@@ -14,6 +14,9 @@ export const login = (data: ILogin) => {
   return request({
     method: 'post',
     url: '/api/login',
+    headers: {
+      isToken: false
+    },
     data: data
   });
 }
@@ -24,5 +27,16 @@ export const getUserInfo = (data: IUserInfo) => {
     method: 'get',
     url: '/api/user/getUserInfo',
     params: data
+  });
+}
+
+//退出登陆
+export const logout = () => {
+  return request({
+    method: 'post',
+    headers: {
+      isToken: false
+    },
+    url: '/api/user/logout'
   });
 }

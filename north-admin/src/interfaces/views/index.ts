@@ -5,12 +5,13 @@ export interface IMessage {
   createTime?: string
 }
 export interface IQuery {
-  page: number,
+  page: number
   size: number
 }
 export interface IRefData {
-  messageList: Array<IMessage>,
-  total: number,
+  messageList: Array<IMessage>
+  total: number
   listQuery: IQuery
   loading: boolean
+  handleDropDownShow: boolean
 }

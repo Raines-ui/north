@@ -2,13 +2,13 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-29 14:08:47
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-30 11:21:10
+ * @LastEditTime: 2023-03-31 17:27:43
  * @FilePath: \north\north-admin\src\store\modules\user.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { ILogin, IUserInfo } from '@/interfaces/store/user'
 import { defineStore } from 'pinia'
-import { login, getUserInfo } from '@/api/user/index'
+import { login, getUserInfo, logout } from '@/api/user/index'
 import { SET_TOKEN, REMOVE_TOKEN } from '@/utils/auth'
 const useUserStore = defineStore('user', {
   state: () => {
@@ -53,6 +53,23 @@ const useUserStore = defineStore('user', {
             resolve(fetchData)
           } else {
             reject(fetchData)
+          }
+        })
+      })
+    },
+    // 退出登陆
+    Logout() {
+      return new Promise((resolve, reject) => {
+        logout().then(response => {
+          if (response.data.code === 200) {
+            resolve(response)
+            // 清除TOKEN以及用户信息
+            REMOVE_TOKEN()
+            window.$message.success(response.data.message)
+            window.localStorage.removeItem('user')
+            window.location.reload()
+          } else {
+            reject(response)
           }
         })
       })

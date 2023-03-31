@@ -55,3 +55,12 @@ export function getUserInfo(options: any) {
     message: '获取用户信息成功'
   }
 }
+
+//退出登陆
+export function logout(options: any) {
+  return {
+    code: 200,
+    result: null,
+    message: '退出成功'
+  }
+}

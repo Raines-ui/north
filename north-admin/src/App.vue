@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-25 09:59:32
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-28 16:39:31
+ * @LastEditTime: 2023-03-31 17:39:24
  * @FilePath: \north\north-admin\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -24,18 +24,30 @@
 -->
 <script lang="ts">
 import { defineComponent } from 'vue'
+import GlobalContainer from './layout/global.vue'
 export default defineComponent({
   name:'App',
-  setup() {}
+  components:{
+    GlobalContainer
+  },
+  setup() {
+    return {
+      GlobalContainer
+    }
+  }
 })
 </script>
 
 <template>
-  <div id="app-container">
-    <n-message-provider>
-      <router-view></router-view>
-    </n-message-provider>
-  </div>
+    <n-dialog-provider>
+      <n-message-provider>
+        <n-notification-provider>
+          <n-loading-bar-provider>
+            <GlobalContainer/>
+          </n-loading-bar-provider>
+        </n-notification-provider>
+      </n-message-provider>
+    </n-dialog-provider>
 </template>
 
 <style>
@@ -43,7 +55,7 @@ html,body{
   width: 100%;
   height: 100%;
 }
-#app,#app-container{
+#app{
   width: 100%;
   height: 100%;
   max-width: unset;

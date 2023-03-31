@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:31:01
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-30 10:22:58
+ * @LastEditTime: 2023-03-31 16:34:32
  * @FilePath: \north\north-admin\src\views\login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -17,11 +17,10 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { FormInst, useMessage, FormRules } from 'naive-ui'
+import { FormInst, FormRules } from 'naive-ui'
 import { ILogin } from '@/interfaces/store/user'
 import useStore from '@/store/index'
 import { useRouter } from 'vue-router'
-const message = useMessage()
 const router = useRouter()
 const { userStore } = useStore()
 const formRef = ref<FormInst | null>(null)
@@ -53,16 +52,14 @@ function handleLogin(e: MouseEvent){
       console.log('formData', formData)
       userStore().Login(formData).then((response :any) => {
         console.log('response',response)
-        message.success(response.message)
-        console.log('token',userStore().token)
-        console.log('username',userStore().username)
+        window.$message.success(response.message)
         console.log('uid',userStore().uid)
-        router.push('index')
+        router.replace('/')
       }).catch((response) => {
-        message.error(response.message)
+        window.$message.error(response.message)
       })
     } else {
-      message.error('验证不通过')
+      window.$message.error('验证不通过')
     }
   })
 }
@@ -82,10 +79,10 @@ function handleLogin(e: MouseEvent){
         show-require-mark
         >
         <n-form-item label="账号" path="username" class="w-full">
-          <n-input v-model:value="formData.username" placeholder="输入账号" />
+          <n-input v-model:value="formData.username" @keyup.enter.native="handleLogin" placeholder="输入账号" />
         </n-form-item>
         <n-form-item label="密码" path="password" class="w-full">
-          <n-input v-model:value="formData.password"  show-password-on="mousedown" type="password" placeholder="输入密码" />
+          <n-input v-model:value="formData.password" @keyup.enter.native="handleLogin"  show-password-on="mousedown" type="password" placeholder="输入密码" />
         </n-form-item>
         <n-form-item class="w-full">
             <n-button attr-type="button" @click="handleLogin" class="mx-auto w-full">

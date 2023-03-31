@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:04:44
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-30 18:24:55
+ * @LastEditTime: 2023-03-31 18:05:37
  * @FilePath: \north\north-admin\src\views\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,21 +10,24 @@
 import { getMessageList } from '@/api/user/home'
 import { defineComponent, reactive, ref, onMounted, h } from 'vue'
 import type { Component } from 'vue'
-import { NIcon } from 'naive-ui'
+import { NIcon, useDialog  } from 'naive-ui'
 import {
   Person12Regular as UserIcon,
   BoxEdit24Filled as EditIcon,
   SignOut24Regular as LogoutIcon,
-  CaretDownRight12Filled
+  CaretDownRight12Filled,
+  CaretDownRight12Regular
 } from '@vicons/fluent'
 import { IRefData } from '@/interfaces/views/index'
 import logo from '@/assets/logo.png'
 import useStore from '@/store/index'
 export default defineComponent({
   components: {
-    CaretDownRight12Filled
+    CaretDownRight12Filled,
+    CaretDownRight12Regular
   },
   setup() {
+    const dialog = useDialog()
     const { userStore } = useStore()
     const renderIcon = (icon: Component) => {
       return () => {
@@ -45,7 +48,7 @@ export default defineComponent({
           icon: renderIcon(EditIcon)
         },
         {
-          label: '退出登录',
+          label: '退出登陆',
           key: 'logout',
           icon: renderIcon(LogoutIcon)
         }
@@ -59,7 +62,8 @@ export default defineComponent({
         page:3,
         size:10
       }),
-      loading:ref(false)
+      loading:ref(false),
+      handleDropDownShow:ref(false)
     })
 
     const unrefData = {
@@ -117,20 +121,50 @@ export default defineComponent({
         })
       },
       // 当前页回调发生变化
-      onPageChange(page:number){
+      onPageChange: (page:number) => {
         refData.listQuery.page = page
         Methods.getList()
       },
       // 当前分页大小发生变化
-      onPageSizeChange(pageSize:number){
+      onPageSizeChange: (pageSize:number) => {
         refData.listQuery.size = pageSize
         Methods.getList()
+      },
+      // 退出登陆
+      logout:()=>{
+        userStore().Logout().then((response: any)=>{
+              console.log('message',response)
+            }).catch((response)=>{
+              window.$message.error(response.data.message)
+        })
+      },
+      // 触发下拉菜单 选择内容
+      handleDropDownSelect: (key:string) => {
+        console.log('dropKey',key)
+        switch (key) {
+          case 'logout' :
+            // 退出登陆
+            dialog.warning({
+              title: '提示',
+              content: '确定退出吗？',
+              positiveText: '确定',
+              negativeText: '取消',
+              onPositiveClick: () => {
+                Methods.logout()
+              },
+              onNegativeClick: () => {
+                window.$message.success('已取消')
+              }
+            })
+            break;
+        }
+      },
+      // 触发下拉菜单 显示状态
+      handleDropDownShow: (value:boolean) => {
+        refData.handleDropDownShow = value
       }
     }
     onMounted(()=>{
-      console.log('INDEX__username',userStore().userName)
-      console.log('INDEX__uid',userStore().uid)
-      console.log('logo',unrefData.logo)
       Methods.getList()
     })
     return {
@@ -139,7 +173,8 @@ export default defineComponent({
       options,
       userInfo,
       unrefData,
-      CaretDownRight12Filled
+      CaretDownRight12Filled,
+      CaretDownRight12Regular
     }
   }
 })
@@ -148,25 +183,32 @@ export default defineComponent({
   <div class="w-full h-full">
     <header class="w-full bg-white h-20 p-2 shadow-xl">
       <n-grid class="w-full h-full" item-responsive>
-        <n-grid-item span="12 400:6 600:6 800:6">
-          <n-space align="center" justify="center" class="h-full">
+        <n-grid-item span="12 400:12 600:12 800:8 1200:6" class="h-full">
+          <n-space align="center" justify="center" :wrap="false" class="h-full">
            <n-image width="100" :src="unrefData.logo" preview-disabled/>
            <span class="text-gray-600 font-bold italic text-xl font-mono">North-Admin</span>  
           </n-space>
         </n-grid-item>
-        <n-grid-item span="0 400:12 600:12 800:12"></n-grid-item>
-        <n-grid-item span="12 400:6 600:6 800:6">
-          <n-space justify="end" align="center" class="h-full">
-            <n-dropdown :options="options">
-              <n-space justify="center" align="end" class="cursor-pointer">
+        <n-grid-item span="0 400:0 600:0 800:10 1200:14" :wrap="false" class="h-full"></n-grid-item>
+        <n-grid-item span="12 400:12 600:12 800:6 1200:4" :wrap="false" class="h-full">
+          <n-space justify="end" align="center" :wrap="false" class="h-full">
+            <n-dropdown :options="options" @select="Methods.handleDropDownSelect" @update:show="Methods.handleDropDownShow">
+              <n-space justify="center" align="end" class="cursor-pointer group">
                 <span class="text-gray-600 text-lg font-mono">{{ userInfo.nickName }}</span>
-                <n-icon size="14" :color="userInfo.gender === 1 ? '#7f6742' : '#f45097'">
+                <n-icon size="24" :color="userInfo.gender === 1 ? '#7f6742' : '#f45097'">
                   <svg-icon :icon="userInfo.gender === 1 ? 'pied-piper-hat' : 'ggshoes'"></svg-icon>
                 </n-icon>
-                <n-icon size="12"><CaretDownRight12Filled /></n-icon>
+                <n-icon size="12" class="transition-transform" :class="refData.handleDropDownShow ? 'transform rotate-45' : ''">
+                  <template v-if="!refData.handleDropDownShow">
+                    <CaretDownRight12Filled />
+                  </template>
+                  <template v-else>
+                    <CaretDownRight12Regular />
+                  </template>
+                </n-icon>
               </n-space>
             </n-dropdown>
-            <n-avatar round :size="48" :src="userInfo.avatar" />
+          <n-avatar round :size="48" :src="userInfo.avatar" />
           </n-space>
         </n-grid-item>
       </n-grid>

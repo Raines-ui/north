@@ -9,6 +9,17 @@
 /// <reference types="vite/client" />
 declare module "*.vue" {
   import type { DefineComponent } from "vue";
+  import type { DialogApiInjection } from "naive-ui/lib/dialog/src/DialogProvider";
+  import type { MessageApiInjection } from "naive-ui/lib/message/src/MessageProvider";
+  import type { NotificationApiInjection } from "naive-ui/lib/notification/src/NotificationProvider";
+  import type { LoadingBarInst } from "naive-ui/lib/loading-bar/src/LoadingBarProvider";
   const vueComponent: DefineComponent<{}, {}, any>;
   export default vueComponent;
+}
+
+declare interface Window {
+  $message: MessageApiInjection;
+  $dialog: DialogApiInjection;
+  $notification: NotificationApiInjection;
+  $loadingBar: LoadingBarInst;
 }
