@@ -11,12 +11,18 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/login.vue')
+    component: () => import('../views/login.vue'),
+    meta: {
+      title: '登陆'
+    }
   },
   {
     path: '/',
     name: 'Index',
-    component: () => import('../views/index.vue')
+    component: () => import('../views/index.vue'),
+    meta: {
+      title: '首页'
+    }
   }
 ]
 
