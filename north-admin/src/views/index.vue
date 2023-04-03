@@ -2,6 +2,14 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:04:44
  * @LastEditors: north 2445951561@qq.com
+ * @LastEditTime: 2023-04-03 10:00:36
+ * @FilePath: \north\north-admin\src\views\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
+ * @Author: north 2445951561@qq.com
+ * @Date: 2023-03-28 14:04:44
+ * @LastEditors: north 2445951561@qq.com
  * @LastEditTime: 2023-03-31 18:05:37
  * @FilePath: \north\north-admin\src\views\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
@@ -21,10 +29,12 @@ import {
 import { IRefData } from '@/interfaces/views/index'
 import logo from '@/assets/logo.png'
 import useStore from '@/store/index'
+import Header from '@/layout/header.vue'
 export default defineComponent({
   components: {
     CaretDownRight12Filled,
-    CaretDownRight12Regular
+    CaretDownRight12Regular,
+    Header
   },
   setup() {
     const dialog = useDialog()
@@ -174,45 +184,15 @@ export default defineComponent({
       userInfo,
       unrefData,
       CaretDownRight12Filled,
-      CaretDownRight12Regular
+      CaretDownRight12Regular,
+      Header
     }
   }
 })
 </script>
 <template>
   <div class="w-full h-full">
-    <header class="w-full bg-white h-20 p-2 shadow-xl">
-      <n-grid class="w-full h-full" item-responsive>
-        <n-grid-item span="12 400:12 600:12 800:8 1200:6" class="h-full">
-          <n-space align="center" justify="center" :wrap="false" class="h-full">
-           <n-image width="100" :src="unrefData.logo" preview-disabled/>
-           <span class="text-gray-600 font-bold italic text-xl font-mono">North-Admin</span>  
-          </n-space>
-        </n-grid-item>
-        <n-grid-item span="0 400:0 600:0 800:10 1200:14" :wrap="false" class="h-full"></n-grid-item>
-        <n-grid-item span="12 400:12 600:12 800:6 1200:4" :wrap="false" class="h-full">
-          <n-space justify="end" align="center" :wrap="false" class="h-full">
-            <n-dropdown :options="options" @select="Methods.handleDropDownSelect" @update:show="Methods.handleDropDownShow">
-              <n-space justify="center" align="end" class="cursor-pointer group">
-                <span class="text-gray-600 text-lg font-mono">{{ userInfo.nickName }}</span>
-                <n-icon size="24" :color="userInfo.gender === 1 ? '#7f6742' : '#f45097'">
-                  <svg-icon :icon="userInfo.gender === 1 ? 'pied-piper-hat' : 'ggshoes'"></svg-icon>
-                </n-icon>
-                <n-icon size="12" class="transition-transform" :class="refData.handleDropDownShow ? 'transform rotate-45' : ''">
-                  <template v-if="!refData.handleDropDownShow">
-                    <CaretDownRight12Filled />
-                  </template>
-                  <template v-else>
-                    <CaretDownRight12Regular />
-                  </template>
-                </n-icon>
-              </n-space>
-            </n-dropdown>
-          <n-avatar round :size="48" :src="userInfo.avatar" />
-          </n-space>
-        </n-grid-item>
-      </n-grid>
-    </header>
+    <Header></Header>
     <div class="p-6">
     <div class="truncate w-60 h-20">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
