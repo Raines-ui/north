@@ -29,12 +29,10 @@ import {
 import { IRefData } from '@/interfaces/views/index'
 import logo from '@/assets/logo.png'
 import useStore from '@/store/index'
-import Header from '@/layout/header.vue'
 export default defineComponent({
   components: {
     CaretDownRight12Filled,
-    CaretDownRight12Regular,
-    Header
+    CaretDownRight12Regular
   },
   setup() {
     const dialog = useDialog()
@@ -184,15 +182,13 @@ export default defineComponent({
       userInfo,
       unrefData,
       CaretDownRight12Filled,
-      CaretDownRight12Regular,
-      Header
+      CaretDownRight12Regular
     }
   }
 })
 </script>
 <template>
-  <div class="w-full h-full">
-    <Header></Header>
+  <div>
     <div class="p-6">
     <div class="truncate w-60 h-20">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
@@ -200,9 +196,35 @@ export default defineComponent({
       molestiae est culpa sapiente accusamus perspiciatis maiores magnam? Aut
       nesciunt ipsam commodi!
     </div>
-    <n-space>
+    <n-space class="py-6">
       <n-button @click="Methods.getList">获取mock数据</n-button>
     </n-space>
+    <n-spin :show="refData.loading">
+      <n-data-table :columns="unrefData.tableColumns" :data="refData.messageList" style="height: 300px;" flex-height />
+      <n-pagination 
+        class="my-10px"
+        show-size-picker
+        :page-sizes="unrefData.pageSizes"
+        :page="refData.listQuery.page"
+        :page-size="refData.listQuery.size"
+        :page-count="refData.total"
+        @update:page="Methods.onPageChange"
+        @update:pageSize="Methods.onPageSizeChange"/>
+    </n-spin>
+
+    <n-spin :show="refData.loading">
+      <n-data-table :columns="unrefData.tableColumns" :data="refData.messageList" style="height: 300px;" flex-height />
+      <n-pagination 
+        class="my-10px"
+        show-size-picker
+        :page-sizes="unrefData.pageSizes"
+        :page="refData.listQuery.page"
+        :page-size="refData.listQuery.size"
+        :page-count="refData.total"
+        @update:page="Methods.onPageChange"
+        @update:pageSize="Methods.onPageSizeChange"/>
+    </n-spin>
+
     <n-spin :show="refData.loading">
       <n-data-table :columns="unrefData.tableColumns" :data="refData.messageList" style="height: 300px;" flex-height />
       <n-pagination 

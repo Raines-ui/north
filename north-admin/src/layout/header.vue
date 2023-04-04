@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full bg-white h-20 p-2 shadow-xl">
+<header class="w-full bg-white h-20 p-2 shadow-xl">
       <n-grid class="w-full h-full" item-responsive>
         <n-grid-item span="12 400:12 600:12 800:8 1200:6" class="h-full">
           <n-space align="center" justify="center" :wrap="false" class="h-full">
@@ -30,7 +30,7 @@
           </n-space>
         </n-grid-item>
       </n-grid>
-  </header>
+</header>
 </template>
 
 <script lang="ts" setup>
