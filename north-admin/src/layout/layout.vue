@@ -1,17 +1,18 @@
 <template>
   <n-layout class="w-full h-full">
-    <n-layout-header>
+    <n-layout-header class="header-container p-2 h-20">
       <Header></Header>
     </n-layout-header>
-    <n-layout style="height: calc(100% - 10rem);" has-sider>
+    <n-layout style="height: calc(100% - 10rem);" class="mt-20" has-sider>
       <n-layout-sider content-style="padding: 24px;">
         <n-menu :options="menuOptions" />
       </n-layout-sider>
       <n-layout-content>
-        <n-scrollbar style="padding: 24px;">
+        <div style="padding: 24px;">
           <router-view></router-view>
+          <!-- 回到顶部 -->
           <n-back-top :right="50" :bottom="120" />
-        </n-scrollbar>
+        </div>
       </n-layout-content>
     </n-layout>
     <n-layout-footer class="h-20 p-10 box-border">成府路</n-layout-footer>
@@ -144,18 +145,27 @@ const menuOptions: MenuOption[] = [
 </script>
 
 <style lang="scss" scoped>
-.n-layout {
-  background-color: unset !important;
-}
+// .n-layout {
+//   background-color: unset !important;
+// }
 
-.n-layout-sider {
-  box-shadow: 5px 5px 10px #afafaf,
-    -5px -5px 10px #ffffff;
-}
+// .n-layout-sider {
+//   box-shadow: 5px 5px 10px var(--n-border-color),
+//     -5px -5px 10px var(--n-border-color);
+// }
 
-.n-layout-footer {
-  box-shadow: 5px -5px 10px #a4a4a4,
-    -5px 5px 10px #ffffff;
+// .n-layout-footer {
+//   box-shadow: 5px -5px 10px #a4a4a4,
+//     -5px 5px 10px #ffffff;
+// }
+
+.header-container{
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    background: var(--n-color);
+    box-shadow:  5px 5px 20px var(--text-color-4),
+             -5px -5px 20px transparent;
 }
 
 .n-layout-scroll-container{

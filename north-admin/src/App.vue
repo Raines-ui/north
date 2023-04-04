@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-25 09:59:32
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-31 17:39:24
+ * @LastEditTime: 2023-04-04 16:12:31
  * @FilePath: \north\north-admin\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -23,15 +23,26 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, watch, computed } from 'vue'
 import GlobalContainer from './layout/global.vue'
+import { darkTheme } from 'naive-ui'
+import useStore from '@/store/index'
 export default defineComponent({
   name:'App',
   components:{
     GlobalContainer
   },
   setup() {
+    const { themeStore } = useStore()
+    const isDarkTheme:any = computed( ()=>  themeStore().isDarkTheme )
+    let theme:any = ref(null)
+    watch(isDarkTheme, (newValue, oldValue) => {
+      console.log('theme changed from', oldValue, 'to', newValue);
+      theme.value = newValue ? darkTheme : null
+    });
     return {
+      darkTheme,
+      theme,
       GlobalContainer
     }
   }
@@ -39,7 +50,9 @@ export default defineComponent({
 </script>
 
 <template>
-    <n-dialog-provider>
+  <n-config-provider :theme="theme">
+    <n-el tag="div">
+      <n-dialog-provider>
       <n-message-provider>
         <n-notification-provider>
           <n-loading-bar-provider>
@@ -48,6 +61,8 @@ export default defineComponent({
         </n-notification-provider>
       </n-message-provider>
     </n-dialog-provider>
+    </n-el>
+  </n-config-provider>
 </template>
 
 <style>

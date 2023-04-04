@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:04:44
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-03 10:00:36
+ * @LastEditTime: 2023-04-04 13:57:47
  * @FilePath: \north\north-admin\src\views\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -189,6 +189,16 @@ export default defineComponent({
 </script>
 <template>
   <div>
+    <n-card>
+        <span
+          style="
+            color: var(--info-color);
+            transition: 0.3s var(--cubic-bezier-ease-in-out);
+          "
+        >
+          我是个 span 标签
+        </span>
+    </n-card>
     <div class="p-6">
     <div class="truncate w-60 h-20">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
