@@ -10,9 +10,9 @@
       <n-grid-item span="0 400:0 600:0 800:10 1200:14" :wrap="false" class="h-full"></n-grid-item>
       <n-grid-item span="12 400:12 600:12 800:6 1200:4" :wrap="false" class="h-full">
         <n-space justify="end" align="center" :wrap="false" class="h-full">
-          <n-switch v-model:value="isDark" size="large" @update:value="handleTheme" class="theme-switch">
+          <n-switch v-model:value="isDark" size="large" @update:value="handleTheme" class="switch-theme">
             <template #checked-icon>
-              <n-icon :component="MoonIcon" color="#ffe100" />
+              <n-icon :component="MoonIcon" color="rgb(97,160,255)" />
             </template>
             <template #unchecked-icon>
               <n-icon :component="SunIcon" color="rgb(241,100,0)" />
@@ -135,9 +135,12 @@ function handleDropDownShow(value: boolean) {
 </script>
 
 <style lang="scss" scoped>
-.switch-theme {
-  .n-switch.n-switch--active .n-switch__rail {
-    background-color: white;
+  .switch-theme {
+    & ::v-deep .n-switch__rail{
+      background-color: #525252!important;
+    }
+    &.n-switch--active ::v-deep .n-switch__rail{
+      background-color: #c8c8c8!important;
+    }
   }
-}
 </style>
