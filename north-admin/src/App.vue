@@ -39,7 +39,7 @@ export default defineComponent({
     watch(isDarkTheme, (newValue, oldValue) => {
       console.log('theme changed from', oldValue, 'to', newValue);
       theme.value = newValue ? darkTheme : null
-    });
+    },{ immediate:true } );
     return {
       darkTheme,
       theme,

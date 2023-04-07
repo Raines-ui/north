@@ -13,6 +13,7 @@ const useThemeStore = defineStore('theme', {
       isDarkTheme: false
     }
   },
+  persist: true,
   getters: {
     getDarkTheme(): boolean {
       return this.isDarkTheme

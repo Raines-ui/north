@@ -61,7 +61,7 @@ const { userStore, themeStore } = useStore()
 const userInfo = userStore()
 const themeOptions = themeStore()
 // 切换夜间主题
-const isDark: Ref<boolean> = ref(false)
+const isDark: Ref<boolean> = ref(themeOptions.isDarkTheme ? themeOptions.isDarkTheme : false)
 const renderIcon = (icon: Component) => {
   return () => {
     return h(NIcon, null, {
@@ -136,9 +136,9 @@ function handleDropDownShow(value: boolean) {
 
 <style lang="scss" scoped>
   .switch-theme {
-    & ::v-deep .n-switch__rail{
-      background-color: #525252!important;
-    }
+    // & ::v-deep .n-switch__rail{
+    //   background-color: #525252!important;
+    // }
     &.n-switch--active ::v-deep .n-switch__rail{
       background-color: #c8c8c8!important;
     }
