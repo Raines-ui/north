@@ -136,9 +136,6 @@ function handleDropDownShow(value: boolean) {
 
 <style lang="scss" scoped>
   .switch-theme {
-    // & ::v-deep .n-switch__rail{
-    //   background-color: #525252!important;
-    // }
     &.n-switch--active ::v-deep .n-switch__rail{
       background-color: #c8c8c8!important;
     }

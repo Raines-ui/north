@@ -10,6 +10,7 @@ export interface IQuery {
 }
 export interface IRefData {
   messageList: Array<IMessage>
+  pageCount: number,
   total: number
   listQuery: IQuery
   loading: boolean

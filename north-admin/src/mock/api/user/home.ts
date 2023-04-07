@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-25 09:59:32
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-03-29 11:51:49
+ * @LastEditTime: 2023-04-07 17:12:43
  * @FilePath: \north\north-admin\src\mock\api\home.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -47,7 +47,8 @@ export function getMessageList(options: any) {
     code: 200,
     page: page,
     size: size,
-    total: Math.ceil(lens / size),
+    pageCount: Math.ceil(lens / size),
+    total: lens,
     result: creatPageData(messageList.data, page, size)
   }
 }
