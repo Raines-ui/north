@@ -19,6 +19,9 @@ module.exports = {
     extend: {
       margin:{
         '10px':'10px',
+      },
+      blur: {
+        xs: '2px',
       }
     },
     colors: {

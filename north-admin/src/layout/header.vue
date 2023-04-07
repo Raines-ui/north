@@ -1,10 +1,10 @@
 <template>
-  <header class="w-full h-full">
+  <header class="w-full h-full p-2 h-20 shadow-lg">
     <n-grid class="w-full h-full" item-responsive>
       <n-grid-item span="12 400:12 600:12 800:8 1200:6" class="h-full">
         <n-space align="center" justify="center" :wrap="false" class="h-full">
           <n-image width="100" :src="logo" preview-disabled />
-          <span class="font-bold italic text-xl font-mono">North-Admin</span>
+          <span class="font-bold italic text-xl font-mono filter">North-Admin</span>
         </n-space>
       </n-grid-item>
       <n-grid-item span="0 400:0 600:0 800:10 1200:14" :wrap="false" class="h-full"></n-grid-item>

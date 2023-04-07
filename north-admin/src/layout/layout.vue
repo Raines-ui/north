@@ -1,18 +1,18 @@
 <template>
   <n-layout class="w-full h-full">
-    <n-layout-header class="header-container p-2 h-20">
+    <n-layout-header class="header-container">
       <Header></Header>
     </n-layout-header>
-    <n-layout style="height: calc(100% - 10rem);" class="mt-20" has-sider>
-      <n-layout-sider content-style="padding: 24px;">
+    <n-layout style="height: calc(100vh - 10rem);" class="mt-20" has-sider>
+      <n-layout-sider content-style="padding: 24px;" class="shadow-2xl">
         <n-menu :options="menuOptions" />
       </n-layout-sider>
-      <n-layout-content>
-        <div style="padding: 24px;">
+      <n-layout-content class="h-full">
+        <n-scrollbar style="padding: 24px;" class="h-full box-border">
           <router-view></router-view>
           <!-- 回到顶部 -->
-          <n-back-top :right="50" :bottom="120" />
-        </div>
+          <n-back-top right="80" bottom="100" style="z-index: 1000;" />
+        </n-scrollbar>
       </n-layout-content>
     </n-layout>
     <n-layout-footer class="h-20 p-10 box-border">成府路</n-layout-footer>
@@ -20,7 +20,7 @@
 </template>
 <script lang="ts" setup>
 import Header from '@/layout/header.vue'
-import { h, Component } from 'vue'
+import { h, Component, ref, onMounted } from 'vue'
 import { NIcon } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import { RouterLink } from 'vue-router'
@@ -29,7 +29,7 @@ import {
   BookmarkMultiple16Filled as BookIcon,
   Person12Regular as PersonIcon
 } from '@vicons/fluent'
-function renderIcon (icon: Component) {
+function renderIcon(icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) })
 }
 
@@ -145,30 +145,11 @@ const menuOptions: MenuOption[] = [
 </script>
 
 <style lang="scss" scoped>
-// .n-layout {
-//   background-color: unset !important;
-// }
 
-// .n-layout-sider {
-//   box-shadow: 5px 5px 10px var(--n-border-color),
-//     -5px -5px 10px var(--n-border-color);
-// }
-
-// .n-layout-footer {
-//   box-shadow: 5px -5px 10px #a4a4a4,
-//     -5px 5px 10px #ffffff;
-// }
-
-.header-container{
-    position: fixed;
-    top: 0;
-    z-index: 999;
-    background: var(--n-color);
-    box-shadow:  5px 5px 20px var(--text-color-4),
-             -5px -5px 20px transparent;
-}
-
-.n-layout-scroll-container{
-  min-height: calc(100% - 10rem)!important;
+::v-deep .header-container {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  background: var(--n-color);
 }
 </style>
