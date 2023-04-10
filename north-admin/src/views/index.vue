@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:04:44
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-07 17:31:42
+ * @LastEditTime: 2023-04-10 14:48:41
  * @FilePath: \north\north-admin\src\views\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -71,7 +71,7 @@ export default defineComponent({
       pageCount: ref(0),
       listQuery: reactive({
         page: 1,
-        size: 10
+        limit: 10
       }),
       loading: ref(false),
       handleDropDownShow: ref(false)
@@ -118,15 +118,16 @@ export default defineComponent({
     const Methods = {
       // 查询列表
       handlePagination: (params: any) => {
+        console.log('params', params)
         refData.listQuery.page = params?.page
-        refData.listQuery.size = params?.size
+        refData.listQuery.limit = params?.limit
         Methods.getList()
       },
       // 列表查询
       getList: () => {
+        console.log('refData.listQuery',refData.listQuery)
         refData.loading = true
         getMessageList(refData.listQuery).then((response: any) => {
-          console.log('result', response.data)
           refData.loading = false
           refData.messageList = response.data.result
           refData.pageCount = response.data.pageCount
@@ -165,6 +166,12 @@ export default defineComponent({
       // 触发下拉菜单 显示状态
       handleDropDownShow: (value: boolean) => {
         refData.handleDropDownShow = value
+      },
+      updateLimit(e: any) {
+        console.log('updateLimit', e)
+        refData.listQuery.limit = e
+        console.log('updateLimit', refData.listQuery.limit)
+        Methods.getList()
       }
     }
     onMounted(() => {
@@ -187,9 +194,9 @@ export default defineComponent({
   <div>
     <n-card>
       <span style="
-                color: var(--info-color);
-                transition: 0.3s var(--cubic-bezier-ease-in-out);
-              ">
+                  color: var(--info-color);
+                  transition: 0.3s var(--cubic-bezier-ease-in-out);
+                ">
         我是个 span 标签
       </span>
     </n-card>
@@ -205,8 +212,8 @@ export default defineComponent({
       </n-space>
       <n-data-table :loading="refData.loading" :columns="unrefData.tableColumns" :data="refData.messageList"
         style="height: 300px;" flex-height />
-      <Pagination :page="refData.listQuery.page" :pageSize="refData.listQuery.size" :pageCount="refData.pageCount" :total="refData.total"
-        @pagination="Methods.handlePagination" />
+      <Pagination v-model:page="refData.listQuery.page" v-model:limit="refData.listQuery.limit"
+        :pageCount="refData.pageCount" :total="refData.total" @pagination="Methods.getList" />
     </div>
   </div>
 </template>

@@ -6,7 +6,7 @@ export interface IMessage {
 }
 export interface IQuery {
   page: number
-  size: number
+  limit: number
 }
 export interface IRefData {
   messageList: Array<IMessage>

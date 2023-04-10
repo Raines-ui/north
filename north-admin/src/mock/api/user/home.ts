@@ -41,14 +41,14 @@ const messageList = Mock.mock({
 export function getMessageList(options: any) {
   const body = JSON.parse(options.body)
   const page = body.page
-  const size = body.size
+  const limit = body.limit
   const lens = messageList.data.length
   return {
     code: 200,
     page: page,
-    size: size,
-    pageCount: Math.ceil(lens / size),
+    limit: limit,
+    pageCount: Math.ceil(lens / limit),
     total: lens,
-    result: creatPageData(messageList.data, page, size)
+    result: creatPageData(messageList.data, page, limit)
   }
 }
