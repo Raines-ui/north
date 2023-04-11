@@ -1,0 +1,92 @@
+/* 默认按钮样式 */
+
+.north__default_btn {
+  cursor: pointer;
+  border-radius: 6px;
+  color: #fff;
+  display: flex;
+  font-size: 24px;
+  height: 48px;
+  justify-content: center;
+  width: 160px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* 渐变按钮样式 */
+
+.north__gradient_btn {
+  background-size: 200% 600%;
+  animation: gradient_btn_animate infinite 8s ease-in-out;
+}
+
+@keyframes gradient_btn_animate {
+  0% {
+    background-position: 20% 70%;
+  }
+  50% {
+    background-position: 70% 20%;
+  }
+  75% {
+    background-position: 80% 60%;
+  }
+  100% {
+    background-position: 20% 70%;
+  }
+}
+
+/* 进度按钮样式 */
+
+.north__progress_btn {
+  background-size: 200% 100%;
+  background-position: 100% 0%;
+  transition: all 1s ease;
+}
+
+.north__progress_btn:hover {
+  background-position: 0 0;
+}
+
+/* 流光按钮样式 */
+.north__meteor_btn {
+  color: #434343;
+}
+
+.north__meteor_btn::before,
+.north__meteor_btn::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  width: 0;
+  height: 100%;
+}
+
+.north__meteor_btn::before {
+  top: 0;
+  left: 0;
+  transition: all 1s ease;
+}
+
+.north__meteor_btn::after {
+  bottom: 0;
+  right: 0;
+  transition: all 1s ease 1s;
+}
+
+.north__meteor_btn:hover::before,
+.north__meteor_btn:hover::after {
+  width: 100%;
+}
+
+.north__meteor_btn:hover::before {
+  border-top-color: red;
+  border-right-color: red;
+}
+
+.north__meteor_btn:hover::after {
+  border-bottom-color: red;
+  border-left-color: red;
+}

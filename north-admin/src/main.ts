@@ -24,6 +24,8 @@ pinia.use(piniaPluginPersistedstate)
 import router from './router/index'
 // 路由守卫
 import './permission'
+// 全局指令
+import vDynaButton from './directive/button/button'
 const instance = createApp(App)
 // 注册NaiveUi
 instance.use(naive)
@@ -33,3 +35,5 @@ instance.component('svg-icon', SvgIcon)
 // 注册pinia
 instance.use(pinia)
 instance.mount('#app')
+// 注册指令
+instance.directive('dynaButton', vDynaButton)
