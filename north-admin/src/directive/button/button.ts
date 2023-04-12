@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-11 11:29:37
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-11 16:24:00
+ * @LastEditTime: 2023-04-12 11:23:13
  * @FilePath: \north\north-admin\src\directive\button\button.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -16,20 +16,28 @@ const DyncButton: ObjectDirective = {
     console.log('dir--mounted--binding', binding)
     switch (binding.arg) {
       case 'gradient':
-        // 渐变按钮
+        // 渐变效果按钮
         gradientFn(el, binding)
         break
       case 'progress':
-        // 进度按钮
+        // 进度效果按钮
         progressFn(el, binding)
         break
       case 'meteor':
-        // 流光按钮
+        // 流光效果按钮
         meteorFn(el, binding)
         break
       case 'meteorHalf':
-        // 半流光按钮
+        // 半流光效果按钮
         meteorHalfFn(el, binding)
+        break
+      case 'shake':
+        // 摇晃效果按钮
+        shakeFn(el, binding)
+        break
+      case 'glass':
+        // 玻璃效果按钮
+        glassFn(el, binding)
         break
     }
   },
@@ -44,6 +52,22 @@ const DyncButton: ObjectDirective = {
         break
       case 'progress':
         progressFn(el, binding)
+        break
+      case 'meteor':
+        // 流光效果按钮
+        meteorFn(el, binding)
+        break
+      case 'meteorHalf':
+        // 半流光效果按钮
+        meteorHalfFn(el, binding)
+        break
+      case 'shake':
+        // 摇晃效果按钮
+        shakeFn(el, binding)
+        break
+      case 'glass':
+        // 玻璃效果按钮
+        glassFn(el, binding)
         break
     }
   },
@@ -72,40 +96,45 @@ function gradientFn(el: any, binding: any) {
     }
     gradientColorArr.push(`${item} ${gradient_values[index]}`)
   })
-  el.style.backgroundImage = `radial-gradient(closest-side,${gradientColorArr.join(
+  el.style.setProperty('background-image', `radial-gradient(closest-side,${gradientColorArr.join(
     ','
-  )})`
+  )})`, 'important')
 }
 
 function progressFn(el: any, binding: any) {
   el.className = 'north__default_btn north__progress_btn'
   let default_color = binding.value?.default_color ? binding.value.default_color : '#35a2fd',
     active_color = binding.value?.active_color ? binding.value.active_color : '#c635fe'
-  el.style.backgroundImage = `linear-gradient(
+  el.style.setProperty('background-image', `linear-gradient(
       90deg,
       ${active_color} 50%,
       ${default_color} 0
-    )`
+    )`, 'important')
 }
 
 function meteorFn(el: any, binding: any) {
   el.className = 'north__default_btn north__meteor_btn'
-  let active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
-  // el.style.backgroundImage = `linear-gradient(
-  //     90deg,
-  //     ${active_color} 50%,
-  //     ${default_color} 0
-  // )`
+  const active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
+  el.style.setProperty('border-color', active_color, 'important')
+  el.style.setProperty('border-width', '0px', 'important')
 }
 
 function meteorHalfFn(el: any, binding: any) {
   el.className = 'north__default_btn north__meteorHalf_btn'
-  let active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
-  // el.style.backgroundImage = `linear-gradient(
-  //     90deg,
-  //     ${active_color} 50%,
-  //     ${default_color} 0
-  //   )`
+  const active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
+  el.style.setProperty('border-color', active_color, 'important')
+  el.style.setProperty('border-width', '0px', 'important')
+}
+
+function shakeFn(el: any, binding: any) {
+  el.className = 'north__default_btn north__shake_btn'
+  const active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
+  el.style.setProperty('background-color', active_color, 'important')
+  el.style.setProperty('box-shadow', `0 10px 20px -10px ${active_color}`, 'important')
+}
+
+function glassFn(el: any, binding: any) {
+  el.className = 'north__default_btn north__glass_btn'
 }
 
 export default DyncButton

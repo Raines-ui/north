@@ -49,44 +49,169 @@
 
 /* 流光按钮样式 */
 .north__meteor_btn {
-  color: #434343;
+  border-width: 0 !important;
 }
 
 .north__meteor_btn::before,
 .north__meteor_btn::after {
   content: '';
+  border: 2px solid transparent;
+  box-sizing: border-box;
   display: inline-block;
   position: absolute;
-  border-width: 2px;
-  border-style: solid;
-  border-color: transparent;
   width: 0;
-  height: 100%;
+  height: 0;
+  border-radius: inherit;
 }
 
 .north__meteor_btn::before {
   top: 0;
   left: 0;
-  transition: all 1s ease;
 }
 
 .north__meteor_btn::after {
   bottom: 0;
   right: 0;
-  transition: all 1s ease 1s;
 }
 
 .north__meteor_btn:hover::before,
 .north__meteor_btn:hover::after {
   width: 100%;
+  height: 100%;
 }
 
 .north__meteor_btn:hover::before {
-  border-top-color: red;
-  border-right-color: red;
+  border-top-color: inherit;
+  border-right-color: inherit;
+  transition: width 0.2s ease-out, height 0.2s ease-out 0.2s;
 }
 
 .north__meteor_btn:hover::after {
-  border-bottom-color: red;
-  border-left-color: red;
+  transition: border-color 0s ease-out 0.4s, width 0.2s ease-out 0.4s,
+    height 0.2s ease-out 0.6s;
+  border-bottom-color: inherit;
+  border-left-color: inherit;
+}
+
+/* 半流光按钮样式 */
+.north__meteorHalf_btn::before,
+.north__meteorHalf_btn::after {
+  content: '';
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  display: inline-block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: inherit;
+}
+
+.north__meteorHalf_btn::before {
+  top: 0;
+  left: 0;
+}
+
+.north__meteorHalf_btn::after {
+  bottom: 0;
+  right: 0;
+}
+
+.north__meteorHalf_btn:hover::before,
+.north__meteorHalf_btn:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+.north__meteorHalf_btn:hover::before {
+  border-top-color: inherit;
+  border-right-color: inherit;
+  transition: width 0.2s ease-out, height 0.2s ease-out 0.2s;
+}
+
+.north__meteorHalf_btn:hover::after {
+  transition: border-color 0s ease-out, width 0.2s ease-out,
+    height 0.2s ease-out 0.2s;
+  border-bottom-color: inherit;
+  border-left-color: inherit;
+}
+
+/* 摇晃按钮样式 */
+
+.north__shake_btn {
+  animation: shake_animate 1s infinite ease-out;
+}
+
+@keyframes shake_animate {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  10% {
+    -webkit-transform: translate3d(-3%, 0, 0) rotate(-5deg);
+    transform: translate3d(-3%, 0, 0) rotate(-5deg);
+  }
+
+  20% {
+    -webkit-transform: translate3d(2%, 0, 0) rotate(3deg);
+    transform: translate3d(2%, 0, 0) rotate(3deg);
+  }
+
+  30% {
+    -webkit-transform: translate3d(-1%, 0, 0) rotate(-3deg);
+    transform: translate3d(-1%, 0, 0) rotate(-3deg);
+  }
+
+  40% {
+    -webkit-transform: translate3d(1%, 0, 0) rotate(2deg);
+    transform: translate3d(1%, 0, 0) rotate(2deg);
+  }
+
+  50% {
+    -webkit-transform: translate3d(-1%, 0, 0) rotate(-1deg);
+    transform: translate3d(-1%, 0, 0) rotate(-1deg);
+  }
+
+  60% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  to {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+.north__glass_btn {
+  overflow: hidden;
+}
+
+/* 玻璃按钮样式 */
+.north__glass_btn:hover::before {
+  content: '';
+  display: inline-block;
+  background-color: #ffffff;
+  transform: rotate(-45deg);
+  position: absolute;
+  opacity: 0;
+  animation: glass_animate 0.8s ease-in-out;
+}
+
+.north__glass_btn::before {
+  height: 150%;
+  top: -25%;
+}
+
+@keyframes glass_animate {
+  0% {
+    width: 6%;
+    left: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 12%;
+    left: 150%;
+    opacity: 0;
+  }
 }

@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:04:44
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-11 15:54:17
+ * @LastEditTime: 2023-04-12 11:49:06
  * @FilePath: \north\north-admin\src\views\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -203,8 +203,10 @@ export default defineComponent({
         <n-button @click="Methods.getList">获取mock数据</n-button>
         <div v-dyna-button:gradient style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;">渐变按钮</div>
         <div v-dyna-button:progress style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;">进度按钮</div>
-        <div v-dyna-button:meteor style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;">流光按钮</div>
-        <div v-dyna-button:meteorHalf style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;">半流光按钮</div>
+        <div v-dyna-button:meteor style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;color: #000;">流光按钮</div>
+        <div v-dyna-button:meteorHalf style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;color: #000;">半流光按钮</div>
+        <div v-dyna-button:shake style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;background-color: aqua;">摇晃按钮</div>
+        <div v-dyna-button:glass style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;background-color: #35a2fd;">玻璃按钮</div>
       </n-space>
       <n-data-table :loading="refData.loading" :columns="unrefData.tableColumns" :data="refData.messageList"
         style="height: 300px;" flex-height />
