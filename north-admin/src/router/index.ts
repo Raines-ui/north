@@ -25,10 +25,25 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '/index',
-        name: 'home',
+        name: 'Home',
         component: () => import('../views/index.vue'),
         meta: {
           title: '首页'
+        }
+      }
+    ]
+  },
+  {
+    path: '/directive',
+    name: 'Directive',
+    component: Layout,
+    children: [
+      {
+        path: '/directive',
+        name: 'Directive',
+        component: () => import('../views/directive/index.vue'),
+        meta: {
+          title: '自定义指令'
         }
       }
     ]

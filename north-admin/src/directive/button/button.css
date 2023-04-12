@@ -5,12 +5,15 @@
   border-radius: 6px;
   color: #fff;
   display: flex;
-  font-size: 24px;
-  height: 48px;
+  font-size: 16px;
+  height: 42px;
   justify-content: center;
-  width: 160px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 120px;
+  align-items: center;
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* 渐变按钮样式 */
@@ -183,10 +186,6 @@
   }
 }
 
-.north__glass_btn {
-  overflow: hidden;
-}
-
 /* 玻璃按钮样式 */
 .north__glass_btn:hover::before {
   content: '';
@@ -214,4 +213,12 @@
     left: 150%;
     opacity: 0;
   }
+}
+
+.north__wave_bubble {
+  position: absolute;
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  transition: all 1.5s;
 }

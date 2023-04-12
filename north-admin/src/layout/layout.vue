@@ -40,7 +40,7 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
           to: {
-            name: 'home',
+            name: 'Home',
             params: {
               lang: 'zh-CN'
             }
@@ -87,10 +87,21 @@ const menuOptions: MenuOption[] = [
     ]
   },
   {
-    label: '寻羊冒险记',
-    key: 'a-wild-sheep-chase',
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: 'Directive',
+            params: {
+              lang: 'zh-CN'
+            }
+          }
+        },
+        { default: () => '自定义指令' }
+      ),
+    key: 'directive',
     icon: renderIcon(BookIcon),
-    disabled: true
   },
   {
     label: '舞，舞，舞',

@@ -201,12 +201,6 @@ export default defineComponent({
       </div>
       <n-space class="py-6">
         <n-button @click="Methods.getList">获取mock数据</n-button>
-        <div v-dyna-button:gradient style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;">渐变按钮</div>
-        <div v-dyna-button:progress style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;">进度按钮</div>
-        <div v-dyna-button:meteor style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;color: #000;">流光按钮</div>
-        <div v-dyna-button:meteorHalf style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;color: #000;">半流光按钮</div>
-        <div v-dyna-button:shake style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;background-color: aqua;">摇晃按钮</div>
-        <div v-dyna-button:glass style="width: 100px;height: 30px;line-height: 30px;text-align: center; font-size: 14px;background-color: #35a2fd;">玻璃按钮</div>
       </n-space>
       <n-data-table :loading="refData.loading" :columns="unrefData.tableColumns" :data="refData.messageList"
         style="height: 300px;" flex-height />
