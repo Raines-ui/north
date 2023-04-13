@@ -14,7 +14,10 @@
           波浪按钮</div>
         <div v-dyna-button:fly style="background-color: #35a2fd;">
           小飞机按钮
-      </div>
+        </div>
+        <div v-dyna-button:cyberpunk>
+          赛博朋克按钮
+        </div>
       </div>
     </n-card>
   </div>

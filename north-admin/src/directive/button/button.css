@@ -254,3 +254,110 @@
     transform: scale(0);
   }
 }
+
+/* 赛博朋克按钮样式 */
+.north__cyberpunk_btn {
+  border-radius: unset;
+  overflow: unset;
+}
+
+.north__cyberpunk_btn_after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  box-shadow: inherit;
+  font-size: inherit;
+  color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+
+.north__cyberpunk_btn:hover .north__cyberpunk_btn_after {
+  -webkit-animation: cyberpunk_animate 1s;
+  animation: cyberpunk_animate 1s;
+  -webkit-animation-timing-function: step-end;
+  animation-timing-function: step-end;
+}
+
+@keyframes cyberpunk_animate {
+  0% {
+    -webkit-clip-path: inset(20% -5px 60% 0);
+    clip-path: inset(20% -5px 60% 0);
+    -webkit-transform: translate(-6px, 5px);
+    transform: translate(-6px, 5px);
+    visibility: visible;
+  }
+
+  10% {
+    -webkit-clip-path: inset(50% -5px 30% 0);
+    clip-path: inset(50% -5px 30% 0);
+    -webkit-transform: translate(6px, -5px);
+    transform: translate(6px, -5px);
+  }
+
+  20% {
+    -webkit-clip-path: inset(20% -5px 60% 0);
+    clip-path: inset(20% -5px 60% 0);
+    -webkit-transform: translate(5px);
+    transform: translate(5px);
+  }
+
+  30% {
+    -webkit-clip-path: inset(80% -5px 5% 0);
+    clip-path: inset(80% -5px 5% 0);
+    -webkit-transform: translate(-8px, 5px);
+    transform: translate(-8px, 5px);
+  }
+
+  40% {
+    -webkit-clip-path: inset(0 -5px 80% 0);
+    clip-path: inset(0 -5px 80% 0);
+    -webkit-transform: translate(-4px, -3px);
+    transform: translate(-4px, -3px);
+  }
+
+  50% {
+    -webkit-clip-path: inset(50% -5px 30% 0);
+    clip-path: inset(50% -5px 30% 0);
+    -webkit-transform: translate(-6px, -5px);
+    transform: translate(-6px, -5px);
+  }
+
+  60% {
+    -webkit-clip-path: inset(80% -5px 5% 0);
+    clip-path: inset(80% -5px 5% 0);
+    -webkit-transform: translate(-7px, 5px);
+    transform: translate(-7px, 5px);
+  }
+
+  70% {
+    -webkit-clip-path: inset(0 -5px 80% 0);
+    clip-path: inset(0 -5px 80% 0);
+    -webkit-transform: translate(3px, 6px);
+    transform: translate(3px, 6px);
+  }
+
+  80% {
+    -webkit-clip-path: inset(50% -5px 30% 0);
+    clip-path: inset(50% -5px 30% 0);
+    -webkit-transform: translate(5px, 5px);
+    transform: translate(5px, 5px);
+  }
+
+  90% {
+    -webkit-clip-path: inset(20% -5px 60% 0);
+    clip-path: inset(20% -5px 60% 0);
+    -webkit-transform: translate(6px, -5px);
+    transform: translate(6px, -5px);
+  }
+
+  to {
+    -webkit-clip-path: inset(0 -5px 80% 0);
+    clip-path: inset(0 -5px 80% 0);
+    -webkit-transform: translate(1px, 5px);
+    transform: translate(1px, 5px);
+  }
+}

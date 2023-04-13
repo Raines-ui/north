@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-11 11:29:37
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-13 16:28:05
+ * @LastEditTime: 2023-04-13 17:32:17
  * @FilePath: \north\north-admin\src\directive\button\button.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -48,6 +48,10 @@ const DyncButton: ObjectDirective = {
         // 飞行路径效果按钮
         flyFn(el, binding)
         break
+      case 'cyberpunk':
+        // 赛博朋克效果按钮
+        cyberpunkFn(el, binding)
+        break
     }
   },
   // 在绑定元素的父组件
@@ -86,6 +90,10 @@ const DyncButton: ObjectDirective = {
         // 飞行路径效果按钮
         flyFn(el, binding)
         break
+      case 'cyberpunk':
+        // 赛博朋克效果按钮
+        cyberpunkFn(el, binding)
+        break
     }
   },
 }
@@ -113,41 +121,61 @@ function gradientFn(el: any, binding: any) {
     }
     gradientColorArr.push(`${item} ${gradient_values[index]}`)
   })
-  el.style.setProperty('background-image', `radial-gradient(closest-side,${gradientColorArr.join(
-    ','
-  )})`, 'important')
+  el.style.setProperty(
+    'background-image',
+    `radial-gradient(closest-side,${gradientColorArr.join(',')})`,
+    'important'
+  )
 }
 
 function progressFn(el: any, binding: any) {
   el.className += ' north__default_btn north__progress_btn'
-  let default_color = binding.value?.default_color ? binding.value.default_color : '#35a2fd',
-    active_color = binding.value?.active_color ? binding.value.active_color : '#c635fe'
-  el.style.setProperty('background-image', `linear-gradient(
+  let default_color = binding.value?.default_color
+    ? binding.value.default_color
+    : '#35a2fd',
+    active_color = binding.value?.active_color
+      ? binding.value.active_color
+      : '#c635fe'
+  el.style.setProperty(
+    'background-image',
+    `linear-gradient(
       90deg,
       ${active_color} 50%,
       ${default_color} 0
-    )`, 'important')
+    )`,
+    'important'
+  )
 }
 
 function meteorFn(el: any, binding: any) {
   el.className += ' north__default_btn north__meteor_btn'
-  const active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
+  const active_color = binding.value?.active_color
+    ? binding.value.active_color
+    : '#35a2fd'
   el.style.setProperty('border-color', active_color, 'important')
   el.style.setProperty('border-width', '0px', 'important')
 }
 
 function meteorHalfFn(el: any, binding: any) {
   el.className += ' north__default_btn north__meteorHalf_btn'
-  const active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
+  const active_color = binding.value?.active_color
+    ? binding.value.active_color
+    : '#35a2fd'
   el.style.setProperty('border-color', active_color, 'important')
   el.style.setProperty('border-width', '0px', 'important')
 }
 
 function shakeFn(el: any, binding: any) {
   el.className += ' north__default_btn north__shake_btn'
-  const active_color = binding.value?.active_color ? binding.value.active_color : '#35a2fd'
+  const active_color = binding.value?.active_color
+    ? binding.value.active_color
+    : '#35a2fd'
   el.style.setProperty('background-color', active_color, 'important')
-  el.style.setProperty('box-shadow', `0 10px 20px -10px ${active_color}`, 'important')
+  el.style.setProperty(
+    'box-shadow',
+    `0 10px 20px -10px ${active_color}`,
+    'important'
+  )
 }
 
 function glassFn(el: any, binding: any) {
@@ -156,13 +184,21 @@ function glassFn(el: any, binding: any) {
 
 function waveFn(el: any, binding: any) {
   el.className += ' north__default_btn north__wave_btn'
-  const bubble = document.createElement("span")
+  // 是否已经存在旧的气泡,存在就删除,防止update影响
+  const oldDom = el.querySelector('.north__wave_bubble')
+  if (oldDom) {
+    el.removeChild(oldDom)
+  }
+  const bubble = document.createElement('span')
   const elRectInfo = el.getBoundingClientRect()
   bubble.className += 'north__wave_bubble'
   el.appendChild(bubble)
   // 设置波纹宽度
-  const bubble_width = elRectInfo.width > elRectInfo.height ? elRectInfo.width : elRectInfo.height
-  const active_color = binding.value?.active_color ? binding.value.active_color : '#ffffff50'
+  const bubble_width =
+    elRectInfo.width > elRectInfo.height ? elRectInfo.width : elRectInfo.height
+  const active_color = binding.value?.active_color
+    ? binding.value.active_color
+    : '#ffffff50'
   // 监听鼠标事件
   el.addEventListener('mouseenter', function (e: MouseEvent) {
     //当前鼠标位置
@@ -186,20 +222,26 @@ function waveFn(el: any, binding: any) {
 function flyFn(el: any, binding: any) {
   el.className += ' north__default_btn north__fly_btn'
   // iconName 需要将svg文件保存到assets/icons/svg中，方可使用
-  const iconName = binding.value?.iconName ? binding.value.iconName : 'paper-plane'
-  const iconColor = binding.value?.iconColor ? binding.value.iconColor : '#ffffff'
+  const iconName = binding.value?.iconName
+    ? binding.value.iconName
+    : 'paper-plane'
+  const iconColor = binding.value?.iconColor
+    ? binding.value.iconColor
+    : '#ffffff'
   const svgOptions = {
     tag: 'svg',
     attrs: {
       class: 'north__svg-icon',
-      style: `fill:${iconColor}`
+      style: `fill:${iconColor}`,
     },
-    children: [{
-      tag: 'use',
-      attrs: {
-        'xlink:href': `#icon-${iconName}`
-      }
-    }]
+    children: [
+      {
+        tag: 'use',
+        attrs: {
+          'xlink:href': `#icon-${iconName}`,
+        },
+      },
+    ],
   }
   const svgDom = createSvgEl(svgOptions)
   // 是否已经存在旧的子元素,存在就删除,防止update影响
@@ -208,6 +250,63 @@ function flyFn(el: any, binding: any) {
     el.removeChild(oldSvgDom)
   }
   el.appendChild(svgDom)
+}
+
+function cyberpunkFn(el: any, binding: any) {
+  el.className += ' north__default_btn north__cyberpunk_btn'
+  // 获取文本内容
+  const content = el.innerText
+  let boxShadow = binding.value?.boxShadow ? binding.value.boxShadow : '#0cf'
+  el.style.setProperty(
+    'box-shadow',
+    `5px 0 0 ${boxShadow}`,
+    'important'
+  )
+  // 渐变按钮
+  let gradient_colors = ['transparent', '#f80', '#00ff95'],
+    gradientColorArr: Array<string> = []
+  const gradient_values = ['10%', '5% 95%', '95%'],
+    gradient_values_lens = gradient_values.length
+
+  if (
+    binding.value?.gradient_colors &&
+    Array.isArray(binding.value.gradient_colors) &&
+    binding.value.gradient_colors.length > 0
+  ) {
+    gradient_colors =
+      binding.value.gradient_colors.length > gradient_values_lens
+        ? binding.value.gradient_colors.slice(0, gradient_values_lens)
+        : binding.value.gradient_colors
+  }
+  gradient_colors.forEach((item, index) => {
+    if (gradient_colors.length === 1) {
+      gradientColorArr.push(`${item} 100%`)
+    }
+    gradientColorArr.push(`${item} ${gradient_values[index]}`)
+  })
+  el.style.setProperty(
+    'background-image',
+    `linear-gradient(30deg,${gradientColorArr.join(',')})`,
+    'important'
+  )
+  // 是否已经存在旧的气泡,存在就删除,防止update影响
+  const oldDom = el.querySelector('.north__cyberpunk_btn_after')
+  if (oldDom) {
+    el.removeChild(oldDom)
+  }
+  // 背景板文字阴影
+  let textShadow =
+    binding.value?.textShadow &&
+      Array.isArray(binding.value?.textShadow) &&
+      binding.value?.textShadow.length >= 2
+      ? binding.value?.textShadow
+      : ['#00b7ff', '#00ff73']
+  // 创建背景板
+  let cyberpunkBgBoard = document.createElement('div')
+  cyberpunkBgBoard.className = 'north__cyberpunk_btn_after'
+  cyberpunkBgBoard.innerText = content
+  cyberpunkBgBoard.style.textShadow = `-5px -2px 0 ${textShadow[0]}, 5px 2px 0 ${textShadow[1]}`
+  el.appendChild(cyberpunkBgBoard)
 }
 
 export default DyncButton
