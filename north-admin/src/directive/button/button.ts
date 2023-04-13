@@ -2,12 +2,12 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-11 11:29:37
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-12 17:50:46
+ * @LastEditTime: 2023-04-13 16:28:05
  * @FilePath: \north\north-admin\src\directive\button\button.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { effect, ObjectDirective } from 'vue'
-import { getElementToPageTop, getElementToPageLeft } from '@/utils/index'
+import { createSvgEl } from '@/utils/index'
 import './button.css'
 const DyncButton: ObjectDirective = {
   // 在绑定元素的父组件
@@ -185,6 +185,29 @@ function waveFn(el: any, binding: any) {
 
 function flyFn(el: any, binding: any) {
   el.className += ' north__default_btn north__fly_btn'
+  // iconName 需要将svg文件保存到assets/icons/svg中，方可使用
+  const iconName = binding.value?.iconName ? binding.value.iconName : 'paper-plane'
+  const iconColor = binding.value?.iconColor ? binding.value.iconColor : '#ffffff'
+  const svgOptions = {
+    tag: 'svg',
+    attrs: {
+      class: 'north__svg-icon',
+      style: `fill:${iconColor}`
+    },
+    children: [{
+      tag: 'use',
+      attrs: {
+        'xlink:href': `#icon-${iconName}`
+      }
+    }]
+  }
+  const svgDom = createSvgEl(svgOptions)
+  // 是否已经存在旧的子元素,存在就删除,防止update影响
+  const oldSvgDom = el.querySelector('.north__svg-icon')
+  if (oldSvgDom) {
+    el.removeChild(oldSvgDom)
+  }
+  el.appendChild(svgDom)
 }
 
 export default DyncButton

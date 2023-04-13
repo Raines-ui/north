@@ -30,14 +30,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '首页'
         }
-      }
-    ]
-  },
-  {
-    path: '/directive',
-    name: 'Directive',
-    component: Layout,
-    children: [
+      },
       {
         path: '/directive',
         name: 'Directive',

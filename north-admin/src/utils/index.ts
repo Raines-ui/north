@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-30 14:16:03
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-12 16:35:33
+ * @LastEditTime: 2023-04-13 15:36:18
  * @FilePath: \north\north-admin\src\utils\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -62,4 +62,79 @@ export const getQuery = (url: string, name: string) => {
     return result.length > 0 ? (result.length > 1 ? result : result[0]) : null
   }
   return null
+}
+
+
+/* 生成svg案例
+const svgOptions = {
+    tag: 'svg',
+    attrs: {
+      id: 'mySvg'
+    },
+    children: [{
+      tag: 'g',
+      children: [{
+        tag: 'text',
+        attrs: {
+          id: 'textEle',
+          x: '0',
+          y: '0',
+          style: 'font-family:Verdana;font-size:24px;color:red'
+        },
+        content: 'fly',
+        children: [{
+          tag: 'animateMotion',
+          attrs: {
+            path: 'M 0 0 L 100 100',
+            dur: '5s',
+            fill: 'freeze'
+          }
+        }]
+      }]
+    }]
+  }
+ */
+
+
+/**
+ * 
+ * @param tagOption 标签选项
+ * @returns 元素标签
+ */
+export const createSvgEl = (tagOption: any) => {
+  const el = createSvgTag(tagOption.tag, tagOption?.attrs, tagOption?.content)
+  if (tagOption.children && tagOption.children.length > 0) {
+    tagOption.children.forEach((item: any) => {
+      let elItem = createSvgEl(item)
+      el.appendChild(elItem)
+    })
+  }
+  return el
+}
+
+/**
+ * 
+ * @param tag 标签名
+ * @param attrs 属性
+ * @returns 元素标签
+ */
+
+function createSvgTag(tag: string, attrs: any, content: string) {
+  const ns = 'http://www.w3.org/2000/svg'
+  const xlinkns = 'http://www.w3.org/1999/xlink'
+  let el = document.createElementNS(ns, tag);
+  if (tag === 'svg') {
+    el.setAttribute('xmlns:xlink', xlinkns);
+  }
+  if (content) {
+    el.innerHTML = content
+  }
+  for (let k in attrs) {
+    if (k === 'xlink:href') {
+      el.setAttributeNS(xlinkns, k, attrs[k]);
+    } else {
+      el.setAttribute(k, attrs[k]);
+    }
+  }
+  return el;
 }

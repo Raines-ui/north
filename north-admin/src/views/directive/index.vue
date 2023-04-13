@@ -13,7 +13,8 @@
         <div v-dyna-button:wave style="background-image: linear-gradient(315deg, #43cea2, #185a9d);">
           波浪按钮</div>
         <div v-dyna-button:fly style="background-color: #35a2fd;">
-          小飞机按钮</div>
+          小飞机按钮
+      </div>
       </div>
     </n-card>
   </div>
