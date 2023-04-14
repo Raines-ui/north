@@ -58,7 +58,7 @@
 .north__meteor_btn::before,
 .north__meteor_btn::after {
   content: '';
-  border: 2px solid transparent;
+  border: 0 solid transparent;
   box-sizing: border-box;
   display: inline-block;
   position: absolute;
@@ -81,6 +81,7 @@
 .north__meteor_btn:hover::after {
   width: 100%;
   height: 100%;
+  border-width: 2px;
 }
 
 .north__meteor_btn:hover::before {
@@ -100,7 +101,7 @@
 .north__meteorHalf_btn::before,
 .north__meteorHalf_btn::after {
   content: '';
-  border: 2px solid transparent;
+  border: 0px solid transparent;
   box-sizing: border-box;
   display: inline-block;
   position: absolute;
@@ -123,6 +124,7 @@
 .north__meteorHalf_btn:hover::after {
   width: 100%;
   height: 100%;
+  border-width: 2px;
 }
 
 .north__meteorHalf_btn:hover::before {
