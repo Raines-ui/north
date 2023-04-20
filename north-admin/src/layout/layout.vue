@@ -20,17 +20,13 @@
 </template>
 <script lang="ts" setup>
 import Header from '@/layout/header.vue'
-import { h, Component, ref, onMounted } from 'vue'
-import { NIcon } from 'naive-ui'
-import type { MenuOption } from 'naive-ui'
+import SvgIcon from '@/components/SvgIcon/index.vue'
+import { h } from 'vue'
+import { MenuOption, NIcon } from 'naive-ui'
 import { RouterLink } from 'vue-router'
-import {
-  Home20Regular as HomeIcon,
-  BookmarkMultiple16Filled as BookIcon,
-  Person12Regular as PersonIcon
-} from '@vicons/fluent'
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) })
+function renderIcon(iconName: String) {
+  console.log('iconName',iconName)
+  return () => { h('div', { class:'hClass' }, { default: () => {} }) }
 }
 
 const menuOptions: MenuOption[] = [
@@ -49,7 +45,7 @@ const menuOptions: MenuOption[] = [
         { default: () => '回家' }
       ),
     key: 'go-back-home',
-    icon: renderIcon(HomeIcon)
+    icon: renderIcon('ggshoes')
   },
   {
     key: 'divider-1',
@@ -72,12 +68,12 @@ const menuOptions: MenuOption[] = [
         '且听风吟'
       ),
     key: 'hear-the-wind-sing',
-    icon: renderIcon(BookIcon)
+    icon: renderIcon('ggshoes')
   },
   {
     label: '1973年的弹珠玩具',
     key: 'pinball-1973',
-    icon: renderIcon(BookIcon),
+    icon: renderIcon('ggshoes'),
     disabled: true,
     children: [
       {
@@ -101,12 +97,12 @@ const menuOptions: MenuOption[] = [
         { default: () => '自定义指令' }
       ),
     key: 'directive',
-    icon: renderIcon(BookIcon),
+    icon: renderIcon('ggshoes'),
   },
   {
     label: '舞，舞，舞',
     key: 'dance-dance-dance',
-    icon: renderIcon(BookIcon),
+    icon: renderIcon('ggshoes'),
     children: [
       {
         type: 'group',
@@ -116,19 +112,19 @@ const menuOptions: MenuOption[] = [
           {
             label: '叙事者',
             key: 'narrator',
-            icon: renderIcon(PersonIcon)
+            icon: renderIcon('ggshoes')
           },
           {
             label: '羊男',
             key: 'sheep-man',
-            icon: renderIcon(PersonIcon)
+            icon: renderIcon('ggshoes')
           }
         ]
       },
       {
         label: '饮品',
         key: 'beverage',
-        icon: renderIcon(PersonIcon),
+        icon: renderIcon('ggshoes'),
         children: [
           {
             label: '威士忌',
