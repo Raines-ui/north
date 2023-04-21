@@ -2,7 +2,15 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:23:09
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-14 14:40:56
+ * @LastEditTime: 2023-04-21 14:15:37
+ * @FilePath: \north\north-admin\src\router\index.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
+ * @Author: north 2445951561@qq.com
+ * @Date: 2023-03-28 14:23:09
+ * @LastEditors: north 2445951561@qq.com
+ * @LastEditTime: 2023-04-21 11:55:19
  * @FilePath: \north\north-admin\src\router\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -27,13 +35,28 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/404'
+    name: 'PathMatch',
+    redirect: '/404',
+    meta: {
+      title: '重定向'
+    }
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import('@/views/error/404.vue'),
+    meta: {
+      title: '测试'
+    }
   },
   {
     path: '/',
     name: 'Index',
     component: Layout,
     redirect: '/index',
+    meta: {
+      title: '首页'
+    },
     children: [
       {
         path: '/index',
