@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-28 14:23:09
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-21 14:15:37
+ * @LastEditTime: 2023-04-24 10:26:30
  * @FilePath: \north\north-admin\src\router\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -42,14 +42,6 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/test',
-    name: 'Test',
-    component: () => import('@/views/error/404.vue'),
-    meta: {
-      title: '测试'
-    }
-  },
-  {
     path: '/',
     name: 'Index',
     component: Layout,
@@ -63,16 +55,28 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Home',
         component: () => import('../views/index.vue'),
         meta: {
-          title: '首页'
+          title: '首页',
+          icon: 'home'
         }
       },
       {
-        path: '/directive',
-        name: 'Directive',
-        component: () => import('../views/directive/index.vue'),
+        path: '/tool',
+        name: 'Tool',
         meta: {
-          title: '自定义指令'
-        }
+          title: '辅助工具',
+          icon: 'tools'
+        },
+        children: [
+          {
+            path: '/directive',
+            name: 'Directive',
+            component: () => import('../views/directive/index.vue'),
+            meta: {
+              title: '自定义指令',
+              icon: 'directive'
+            }
+          }
+        ]
       }
     ]
   }
