@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { createHtmlPlugin } from 'vite-plugin-html'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import path from 'path' //引入path模块
 
@@ -7,6 +8,16 @@ import path from 'path' //引入path模块
 export default defineConfig({
   plugins: [
     vue(),
+    createHtmlPlugin({
+      minify: true,
+      template: 'index.html',
+      inject: {
+        data: {
+          APP_TITLE: '后台管理系统',
+          FAVICON_NAME: 'north'
+        }
+      }
+    }),
     createSvgIconsPlugin({
       // 指定需要缓存的图标文件夹
       iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/svg')],
