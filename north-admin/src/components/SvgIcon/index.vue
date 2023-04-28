@@ -1,3 +1,11 @@
+<!--
+ * @Author: north 2445951561@qq.com
+ * @Date: 2023-03-30 16:28:11
+ * @LastEditors: north 2445951561@qq.com
+ * @LastEditTime: 2023-04-28 11:30:14
+ * @FilePath: \north\north-admin\src\components\SvgIcon\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <!-- 显示外部传入的svg -->
   <div
@@ -14,7 +22,7 @@
 
 <script setup lang="ts">
 import { isExternal as external } from '@/utils/validate'
-import { defineProps, computed } from "vue";
+import { defineProps, computed } from "vue"
 
 const props = defineProps({
   // icon 图标
@@ -32,7 +40,7 @@ const props = defineProps({
 /**
  * 判断是否为外部图标
  */
-const isExternal = computed(() => external(props.icon));
+const isExternal = computed(() => external(props.icon))
 /**
  * 外部图标样式
  */

@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-03-25 09:59:32
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-04 16:12:31
+ * @LastEditTime: 2023-04-28 11:43:46
  * @FilePath: \north\north-admin\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -50,8 +50,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <n-config-provider :theme="theme">
-    <n-el tag="div">
+  <n-config-provider :theme="theme" class="w-full h-full">
+    <n-el tag="div" class="w-full h-full">
       <n-dialog-provider>
       <n-message-provider>
         <n-notification-provider>
