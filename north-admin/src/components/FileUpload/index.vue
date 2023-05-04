@@ -17,13 +17,12 @@
 <template>
   <div>
     <n-upload multiple :action="uploadAction" :show-file-list="false" v-model:data="fileData" :disabled="isDisabled"
-      :headers="headers" :max="max" @error="handleError" @finish="handleFinish"
-      @before-upload="handleUploadBefore">
+      :headers="headers" :max="max" @error="handleError" @finish="handleFinish" @before-upload="handleUploadBefore">
       <n-button class="uploadButton"><n-spin v-show="isUpload" :size="12"></n-spin>{{ btnTitle }}</n-button>
     </n-upload>
     <ul v-if="myFileList && myFileList.length > 0">
       <n-scrollbar style="max-height: 120px">
-        <li v-for="(item, index) in myFileList"
+        <li v-for="(item, index) in myFileList" :key="'file' + index"
           class="flex items-center p-2 border-box group cursor-pointer bg-transparent hover:bg-gray-100"
           @click="handlePreview(item)">
           <span>
@@ -114,7 +113,10 @@ watch([() => props.value, props.data], ([newVal, newData], [oldVal, oldData]) =>
   }
 }, { deep: true, immediate: true })
 
-// 获取文件扩展名
+/**
+ * 获取文件扩展名
+ * @param {文件地址} fileName 
+ */
 function getFileExt(fileName: string | null | undefined) {
   if (fileName) {
     const fileNameArr = fileName.split('.')
@@ -125,7 +127,10 @@ function getFileExt(fileName: string | null | undefined) {
   }
 }
 
-// 检测图标是否存在于文件夹中
+/**
+ * 检测图标是否存在于本地文件夹中
+ * @param {图标名称} iconName 
+ */
 function isExistIcon(iconName: string): boolean {
   // 获取静态资源下的所有SVG图标
   const officesIcons: object = import.meta.glob('@/assets/icons/svg/offices/*.svg', { eager: true })
@@ -141,7 +146,10 @@ function isExistIcon(iconName: string): boolean {
   return isExist
 }
 
-// 校验上传文件格式
+/**
+ * 校验上传文件格式
+ * @param {文件地址} file 
+ */
 function checkFileType(file: string | null | undefined): boolean {
   if (file) {
     const fileNameArr = file.split('.')
@@ -163,7 +171,10 @@ function checkFileNum(): boolean {
   return fileNum <= props.max
 }
 
-// 判断文件大小
+/**
+ * 判断文件大小
+ * @param {当前文件大小} size 
+ */
 function checkFileSize(size: number | undefined): boolean {
   if (size) {
     return size / 1024 / 1024 < props.fileSize
@@ -203,7 +214,7 @@ function handleUploadBefore(options: IOptions) {
       resetUpload()
       return reject(false)
     }
-    // 临时
+    // 临时 应该放在上传成功逻辑中
     myFileList.value.unshift(options.file.fullPath)
     updateFileList()
     setTimeout(() => {
@@ -220,9 +231,11 @@ function handleFinish(options: IOptions) {
   updateFileList()
 }
 
-// 预览文件
+/**
+ * 文件预览
+ * @param {预览地址} url 
+ */
 function handlePreview(url: string | null | undefined) {
-  console.log('handlePreview', url)
   if (!url) {
     window.$message.error('预览地址不能为空!')
     return
@@ -230,7 +243,10 @@ function handlePreview(url: string | null | undefined) {
   window.open(url, 'newwindow')
 }
 
-// 删除文件
+/**
+ * 删除文件
+ * @param {文件索引值} index 
+ */
 function deleteFile(index: number) {
   myFileList.value.splice(index, 1)
   fileNum = myFileList.value.length
