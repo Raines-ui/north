@@ -27,12 +27,12 @@
 import ImageUpload from '@/components/ImageUpload/index.vue'
 import FileUpload from '@/components/FileUpload/index.vue'
 import { reactive, ref } from 'vue'
-let fileData = reactive<any>({name: null,type:null})
+let fileData = reactive<any>({ name: null, type: null })
 let url = ref<any>(null)
-function updateData(){
+function updateData() {
   fileData.name = '数据'
   fileData.type = 'file'
-  url.value = 'https://pic.616pic.com/ys_b_img/00/06/20/novPzrqvE3.jpg'
+  url.value = 'https://pic.616pic.com/ys_b_img/00/06/20/novPzrqvE3.jpg,https://dogefs.s3.ladydaily.com/~/source/unsplash/photo-1682685797208-c741d58c2eff,https://dogefs.s3.ladydaily.com/~/source/unsplash/photo-1681325655883-14885bd9cd93'
   console.log(url.value)
 }
 </script>

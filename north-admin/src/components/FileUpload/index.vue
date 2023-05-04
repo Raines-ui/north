@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-26 15:33:49
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-04-28 17:15:29
+ * @LastEditTime: 2023-05-04 11:57:47
  * @FilePath: \north\north-admin\src\components\FileUpload\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,15 +22,20 @@
       <n-button>{{ btnTitle }}</n-button>
     </n-upload>
     <ul v-if="myFileList && myFileList.length > 0">
-      <li v-for="(item, index) in myFileList" class="flex items-center p-2 border-box group cursor-pointer bg-transparent hover:bg-gray-100">
-        <span>
-          <svg-icon :icon="getFileExt(item)" />
-        </span>
-        <span class="pl-1 pr-5 border-box group-hover:text-blue-500">{{ item }}</span>
-        <span class="opacity-0 text-blue-400 group-hover:opacity-100">
-          <svg-icon icon="close" />
-        </span>
-      </li>
+      <n-scrollbar style="max-height: 120px">
+        <li v-for="(item, index) in myFileList"
+          class="flex items-center p-2 border-box group cursor-pointer bg-transparent hover:bg-gray-100"
+          @click="handlePreview(item)">
+          <span>
+            <svg-icon :icon="getFileExt(item)" />
+          </span>
+          <span class="pl-1 pr-5 border-box group-hover:text-blue-500 truncate ..." :title="item ? item : ''">{{ item
+          }}</span>
+          <span class="opacity-0 text-blue-400 group-hover:opacity-100" @click="deleteFile(index)">
+            <svg-icon icon="close" />
+          </span>
+        </li>
+      </n-scrollbar>
     </ul>
   </div>
 </template>
@@ -122,7 +127,7 @@ function isExistIcon(iconName: string): boolean {
 // 组件发生变化
 function handleChange(options: IOptions) {
   console.log('组件发生变化', options)
-  myFileList.value = options.fileList.map(item => item.fullPath)
+  // myFileList.value = options.fileList.map(item => item.fullPath)
   console.log('myFileList', myFileList.value)
 }
 
@@ -137,9 +142,28 @@ function handleFinish(options: IOptions) {
   console.log('文件上传结束', options)
 }
 
-// 删除文件
+// 删除文件监听
 function handleRemove(options: IOptions) {
   console.log('删除文件', options)
+}
+
+// 预览文件
+function handlePreview(url: string | null | undefined) {
+  console.log('handlePreview', url)
+  if (!url) {
+    window.$message.error('预览地址不能为空!')
+    return
+  }
+  window.open(url, 'newwindow')
+
+}
+
+// 删除文件
+function deleteFile(index: number) {
+  console.log('deleteFile', index)
+  console.log('myFileList', myFileList.value)
+  myFileList.value.splice(index, 1)
+  console.log('after', myFileList.value)
 }
 
 // 文件上传失败
