@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-26 15:33:49
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-05-04 16:31:03
+ * @LastEditTime: 2023-05-05 10:31:35
  * @FilePath: \north\north-admin\src\components\FileUpload\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,7 +16,7 @@
 -->
 <template>
   <div>
-    <n-upload multiple :action="uploadAction" :show-file-list="false" v-model:data="fileData" :disabled="isDisabled"
+    <n-upload ref="uploadRef" :default-upload="isAutoUpload" multiple :action="uploadAction" :show-file-list="false" v-model:data="fileData" :disabled="isDisabled"
       :headers="headers" :max="max" @error="handleError" @finish="handleFinish" @before-upload="handleUploadBefore">
       <n-button class="uploadButton"><n-spin v-show="isUpload" :size="12"></n-spin>{{ btnTitle }}</n-button>
     </n-upload>
@@ -39,7 +39,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { UploadFileInfo, UploadSettledFileInfo } from 'naive-ui'
+import type { UploadFileInfo, UploadInst } from 'naive-ui'
 import { GET_TOKEN } from '@/utils/auth'
 import { ref, watch, defineEmits } from 'vue'
 interface IOptions {
@@ -84,6 +84,11 @@ const props = defineProps({
   fileSize: {
     type: Number,
     default: 10
+  },
+  // 是否取消自动上传
+  isAutoUpload: {
+    type: Boolean,
+    default: true
   }
 })
 const headers = ref<Object>({
@@ -100,6 +105,7 @@ let isUpload = ref<boolean>(false)
 // 是否禁用按钮
 let isDisabled = ref<boolean>(false)
 const emit = defineEmits(["update:value"])
+const uploadRef = ref<UploadInst | null>(null)
 
 watch([() => props.value, props.data], ([newVal, newData], [oldVal, oldData]) => {
   fileData.value = newData
@@ -264,6 +270,16 @@ function handleError(options: IOptions) {
 function updateFileList() {
   emit("update:value", myFileList.value.length > 0 ? myFileList.value.join(',') : null)
 }
+
+// 取消自动上传，手动提交
+function handleUpload() {
+  console.log('uploadRef',uploadRef)
+  uploadRef.value?.submit()
+}
+
+defineExpose({
+  handleUpload,
+})
 </script>
 <style lang="scss" scoped>
 .uploadButton {
