@@ -11,7 +11,6 @@
  */
 // 首先引入Mock
 import Mock from 'mockjs'
-
 // 引入所有的mock文件
 import { getMessageList } from './api/user/home'
 import { login, getUserInfo, logout } from './api/user/index'

@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-26 15:33:49
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-05-05 10:31:35
+ * @LastEditTime: 2023-05-06 15:56:52
  * @FilePath: \north\north-admin\src\components\FileUpload\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,8 +16,9 @@
 -->
 <template>
   <div>
-    <n-upload ref="uploadRef" :default-upload="isAutoUpload" multiple :action="uploadAction" :show-file-list="false" v-model:data="fileData" :disabled="isDisabled"
-      :headers="headers" :max="max" @error="handleError" @finish="handleFinish" @before-upload="handleUploadBefore">
+    <n-upload ref="uploadRef" :default-upload="isAutoUpload" multiple :action="uploadAction" :show-file-list="false"
+      v-model:data="fileData" :disabled="isDisabled" :headers="headers" :max="max" @error="handleError"
+      @finish="handleFinish" @before-upload="handleUploadBefore">
       <n-button class="uploadButton"><n-spin v-show="isUpload" :size="12"></n-spin>{{ btnTitle }}</n-button>
     </n-upload>
     <ul v-if="myFileList && myFileList.length > 0">
@@ -41,11 +42,12 @@
 <script lang="ts" setup>
 import type { UploadFileInfo, UploadInst } from 'naive-ui'
 import { GET_TOKEN } from '@/utils/auth'
+import { isExternal } from '@/utils/validate'
 import { ref, watch, defineEmits } from 'vue'
 interface IOptions {
   file: UploadFileInfo,
   fileList: Array<UploadFileInfo>,
-  event?: Event
+  event?: ProgressEvent
 }
 const props = defineProps({
   // 值
@@ -58,7 +60,7 @@ const props = defineProps({
   // 上传地址
   uploadAction: {
     type: String,
-    default: 'https://www.mocky.io/v2/5e4bafc63100007100d8b70f'
+    default: 'http://localhost:1000/upload'
   },
   // 附加数据
   data: {
@@ -94,6 +96,7 @@ const props = defineProps({
 const headers = ref<Object>({
   'Admin-Token': 'Bearer ' + GET_TOKEN()
 })
+// const headers = ref<Object | undefined>(undefined)
 let fileData = ref<Object>(props.data)
 let myFileList = ref<Array<string | null | undefined>>([])
 // 按钮标题
@@ -171,9 +174,8 @@ function checkFileType(file: string | null | undefined): boolean {
 
 // 校验文件数量
 function checkFileNum(): boolean {
-  console.log('myFileList.value', myFileList.value)
   fileNum = myFileList.value.length + 1
-  console.log('fileNum', fileNum)
+  // console.log('fileNum', fileNum)
   return fileNum <= props.max
 }
 
@@ -193,15 +195,15 @@ function checkFileSize(size: number | undefined): boolean {
 function resetUpload() {
   isUpload.value = false
   btnTitle.value = props.title
-  isDisabled.value = props.disabled
+  isDisabled.value = false
 }
 
 // 文件上传之前
 function handleUploadBefore(options: IOptions) {
   // 需要使用Promise返回，直接返回false，无法打断上传
   return new Promise((resolve, reject) => {
-    console.log('文件上传之前', options)
-    console.log('列表', options.fileList)
+    // console.log('文件上传之前', options)
+    // console.log('列表', options.fileList)
     isUpload.value = true
     btnTitle.value = '上传中...'
     isDisabled.value = true
@@ -220,21 +222,43 @@ function handleUploadBefore(options: IOptions) {
       resetUpload()
       return reject(false)
     }
-    // 临时 应该放在上传成功逻辑中
-    myFileList.value.unshift(options.file.fullPath)
-    updateFileList()
-    setTimeout(() => {
+    // 如果是手动上传，先返回文件名称
+    if (!props.isAutoUpload) {
+      myFileList.value.unshift(options.file.fullPath)
       resetUpload()
-    }, 3000)
+      updateFileList()
+    }
     return resolve(true)
   })
 }
 
 // 文件上传结束
 function handleFinish(options: IOptions) {
-  console.log('文件上传结束', options)
-  resetUpload()
-  updateFileList()
+  const target = options.event?.target as XMLHttpRequest
+  // 使用前请关闭mock
+  if(!target?.response){
+    window.$notification.error({
+    content:'上传失败',
+    duration: 2500,
+    placement: 'top',
+    keepAliveOnHover: true
+  })
+    return
+  }
+  const result: any = JSON.parse(target.response)
+  console.log(`${props.uploadAction}接口的返回结果：\n`, result)
+  // 是否自动上传, 手动上传不可预览
+  if (props.isAutoUpload) {
+    myFileList.value.unshift(result?.data)
+    resetUpload()
+    updateFileList()
+  } 
+  window.$notification.success({
+    content: result.message ? result.message : '上传成功',
+    duration: 2500,
+    placement: 'top',
+    keepAliveOnHover: true
+  })
 }
 
 /**
@@ -243,7 +267,11 @@ function handleFinish(options: IOptions) {
  */
 function handlePreview(url: string | null | undefined) {
   if (!url) {
-    window.$message.error('预览地址不能为空!')
+    window.$message.warning('预览地址不能为空!')
+    return
+  }
+  if (!isExternal(url)) {
+    window.$message.warning('预览地址有误!')
     return
   }
   window.open(url, 'newwindow')
@@ -262,6 +290,12 @@ function deleteFile(index: number) {
 // 文件上传失败
 function handleError(options: IOptions) {
   console.log('文件上传失败', options)
+  window.$notification.error({
+    content:'上传失败',
+    duration: 2500,
+    placement: 'top',
+    keepAliveOnHover: true
+  })
   resetUpload()
   updateFileList()
 }
@@ -273,7 +307,7 @@ function updateFileList() {
 
 // 取消自动上传，手动提交
 function handleUpload() {
-  console.log('uploadRef',uploadRef)
+  // console.log('uploadRef', uploadRef)
   uploadRef.value?.submit()
 }
 

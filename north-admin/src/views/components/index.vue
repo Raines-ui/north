@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-27 10:26:58
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-05-05 10:24:22
+ * @LastEditTime: 2023-05-06 15:49:08
  * @FilePath: \north\north-admin\src\views\components\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,7 +15,7 @@
           <span class="w-full inline-block font-bold italic py-4">图片上传组件</span>
         </div>
         <div class="flex flex-col justify-start item-center flex-1">
-          <FileUpload ref="fileUploadRef" v-model:value="url" :fileType="['pdf']" :fileSize="1" :isAutoUpload="false"></FileUpload>
+          <FileUpload ref="fileUploadRef" v-model:value="url"></FileUpload>
           <span class="w-full inline-block font-bold italic py-4">文件上传组件</span>
         </div>
         <n-button @click="updateData" class="mx-2">更新数据{{ fileData }}</n-button>
@@ -43,8 +43,8 @@ function getUrl(){
 }
 
 function handleSubmit(){
-  console.log('getUrl', url.value)
-  fileUploadRef.value?.handleUpload()
+  const childComp:any = fileUploadRef.value
+  childComp?.handleUpload()
 }
 
 onMounted(()=>{
