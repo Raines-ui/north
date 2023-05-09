@@ -2,7 +2,7 @@
  * @Author: north 2445951561@qq.com
  * @Date: 2023-04-27 10:26:58
  * @LastEditors: north 2445951561@qq.com
- * @LastEditTime: 2023-05-06 15:49:08
+ * @LastEditTime: 2023-05-09 15:01:38
  * @FilePath: \north\north-admin\src\views\components\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -11,7 +11,7 @@
     <n-card title="上传组件">
       <div class="w-full flex flex-wrap justify-around item-center">
         <div class="flex flex-col justify-center item-start flex-1">
-          <ImageUpload></ImageUpload>
+          <ImageUpload v-model:value="imgUrls"></ImageUpload>
           <span class="w-full inline-block font-bold italic py-4">图片上传组件</span>
         </div>
         <div class="flex flex-col justify-start item-center flex-1">
@@ -31,6 +31,7 @@ import FileUpload from '@/components/FileUpload/index.vue'
 import { onMounted, reactive, ref } from 'vue'
 let fileData = reactive<any>({ name: null, type: null })
 let url = ref<any>(null)
+let imgUrls = ref<string | null>('https://pic.616pic.com/ys_b_img/00/06/20/novPzrqvE3.jpg,https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg,https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg')
 const fileUploadRef = ref<null | HTMLElement>(null)
 function updateData() {
   // fileData.name = '数据'
@@ -40,6 +41,7 @@ function updateData() {
 }
 function getUrl(){
   console.log('getUrl', url.value)
+  console.log('imgUrls', imgUrls.value)
 }
 
 function handleSubmit(){

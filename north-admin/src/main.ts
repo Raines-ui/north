@@ -11,7 +11,7 @@ import './style.css'
 import App from './App.vue'
 import naive from "naive-ui"
 import './styles/tailwind.css' // 引入tailwind.css
-import './mock/index.ts' // 使用mockjs模拟数据
+// import './mock/index.ts' // 使用mockjs模拟数据
 import 'virtual:svg-icons-register'
 // 全局引入SvgIcon组件
 import SvgIcon from "@/components/SvgIcon/index.vue";
